@@ -1,0 +1,8 @@
+/* Persona app typefaces — same TTFs bundled in the app */
+@font-face{font-family:'Manrope';font-style:normal;font-weight:400;src:url('fonts/Manrope-Regular.ttf') format('truetype');}
+@font-face{font-family:'Manrope';font-style:normal;font-weight:500;src:url('fonts/Manrope-Medium.ttf') format('truetype');}
+@font-face{font-family:'Manrope';font-style:normal;font-weight:600;src:url('fonts/Manrope-SemiBold.ttf') format('truetype');}
+@font-face{font-family:'Manrope';font-style:normal;font-weight:700;src:url('fonts/Manrope-Bold.ttf') format('truetype');}
+@font-face{font-family:'Unbounded';font-style:normal;font-weight:500;src:url('fonts/Unbounded-Medium.ttf') format('truetype');}
+@font-face{font-family:'Unbounded';font-style:normal;font-weight:800;src:url('fonts/Unbounded-ExtraBold.ttf') format('truetype');}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;src:url('fonts/IBMPlexMono-Regular.ttf') format('truetype');}

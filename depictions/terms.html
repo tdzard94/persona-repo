@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Persona — Terms &amp; Disclaimer</title>
+<link rel="icon" href="assets/icon.png">
+<link rel="stylesheet" href="assets/fonts.css">
+<style>
+:root{
+  --bg:#05060A;
+  --glass:rgba(255,255,255,.06);
+  --hairline:rgba(255,255,255,.08);
+  --control-fill:rgba(255,255,255,.12);
+  --accent:#D9B469;
+  --t1:#F2F4F8;
+  --t2:#9AA3B8;
+  --t3:#6F7890;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased;}
+body{
+  background:var(--bg);
+  background-image:radial-gradient(1200px 600px at 50% -10%, rgba(217,180,105,.07), transparent 60%);
+  font-family:'Manrope',-apple-system,'SF Pro Text',system-ui,sans-serif;
+  color:var(--t1);
+}
+.page{max-width:430px;margin:0 auto;padding:28px 16px 40px;}
+
+.head{display:flex;align-items:center;gap:12px;margin-bottom:24px;}
+.app-icon{
+  width:44px;height:44px;border-radius:11px;flex:none;
+  background:var(--glass);border:1px solid var(--hairline);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+.app-icon img{width:34px;height:34px;border-radius:8px;display:block;}
+.head-txt{flex:1;min-width:0;}
+.head-title{font-family:'Unbounded',sans-serif;font-size:17px;font-weight:800;letter-spacing:-.02em;line-height:1.2;}
+.lang-toggle{
+  display:flex;gap:2px;flex:none;
+  background:var(--glass);border:1px solid var(--hairline);
+  border-radius:999px;padding:3px;
+}
+.lang-btn{
+  font-family:'Manrope',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.04em;
+  color:var(--t3);background:none;border:none;border-radius:999px;
+  padding:4px 10px;cursor:pointer;
+}
+.lang-btn.active{background:var(--control-fill);color:var(--t1);}
+
+.section{margin-bottom:20px;}
+.section h3{font-size:15px;font-weight:700;color:var(--t1);letter-spacing:-.01em;margin-bottom:8px;}
+.section p{font-size:13px;color:var(--t2);line-height:1.65;}
+
+.footer{margin-top:28px;border-top:1px solid var(--hairline);padding-top:14px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;}
+.back{font-size:12px;font-weight:600;color:var(--accent);text-decoration:none;}
+.back:active{opacity:.6;}
+.date{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--t3);}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="head">
+    <div class="app-icon"><img src="assets/icon.png" alt="Persona"></div>
+    <div class="head-txt">
+      <div class="head-title" data-en="Terms &amp; Disclaimer" data-vi="Điều khoản &amp; Miễn trừ">Terms &amp; Disclaimer</div>
+    </div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" data-lang="vi" onclick="setLang('vi')">VI</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3 data-en="1. No Warranty" data-vi="1. Không bảo hành">1. No Warranty</h3>
+    <p data-en="This software is provided \"AS IS\", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and non-infringement." data-vi="Phần mềm này được cung cấp \"NGUYÊN TRẠNG\", không kèm bất kỳ bảo hành nào, dù trực tiếp hay ngụ ý, bao gồm nhưng không giới hạn ở tính thương mại, phù hợp cho một mục đích cụ thể và không xâm phạm quyền.">This software is provided "AS IS", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and non-infringement.</p>
+  </div>
+
+  <div class="section">
+    <h3 data-en="2. Use at Your Own Risk" data-vi="2. Sử dụng với rủi ro của chính bạn">2. Use at Your Own Risk</h3>
+    <p data-en="You are solely responsible for how you use this software. The developer is not liable for any damage, data loss, device malfunction, or account actions (including bans) that may result from its use." data-vi="Bạn tự chịu hoàn toàn trách nhiệm về cách bạn sử dụng phần mềm này. Nhà phát triển không chịu trách nhiệm cho bất kỳ hư hại, mất dữ liệu, lỗi thiết bị, hay hành động đối với tài khoản (bao gồm cả việc bị khóa) có thể xảy ra do sử dụng phần mềm.">You are solely responsible for how you use this software. The developer is not liable for any damage, data loss, device malfunction, or account actions (including bans) that may result from its use.</p>
+  </div>
+
+  <div class="section">
+    <h3 data-en="3. Acceptable Use" data-vi="3. Sử dụng đúng mục đích">3. Acceptable Use</h3>
+    <p data-en="Do not use this software to commit fraud, deceive other people or services, violate any law, or infringe the rights of others. Spoofing device identity may violate the terms of service of third-party apps and services — any consequences of doing so are your responsibility." data-vi="Không sử dụng phần mềm này để lừa đảo, đánh lừa người hoặc dịch vụ khác, vi phạm pháp luật, hay xâm phạm quyền của người khác. Việc ngụy trang nhận diện thiết bị có thể vi phạm điều khoản dịch vụ của các ứng dụng và dịch vụ bên thứ ba — mọi hệ quả do đó là trách nhiệm của bạn.">Do not use this software to commit fraud, deceive other people or services, violate any law, or infringe the rights of others. Spoofing device identity may violate the terms of service of third-party apps and services — any consequences of doing so are your responsibility.</p>
+  </div>
+
+  <div class="section">
+    <h3 data-en="4. Not Affiliated with Apple" data-vi="4. Không liên kết với Apple">4. Not Affiliated with Apple</h3>
+    <p data-en="This software is not developed by, endorsed by, or affiliated with Apple Inc. All trademarks are the property of their respective owners." data-vi="Phần mềm này không được phát triển, xác nhận hay liên kết với Apple Inc. Tất cả thương hiệu thuộc về chủ sở hữu tương ứng của chúng.">This software is not developed by, endorsed by, or affiliated with Apple Inc. All trademarks are the property of their respective owners.</p>
+  </div>
+
+  <div class="section">
+    <h3 data-en="5. Jailbreaking" data-vi="5. Về jailbreak">5. Jailbreaking</h3>
+    <p data-en="Jailbreaking may void your device warranty and violate its terms of service. Use this software only on devices you own, at your own discretion." data-vi="Jailbreak có thể làm mất hiệu lực bảo hành thiết bị và vi phạm điều khoản dịch vụ của nó. Chỉ sử dụng phần mềm này trên thiết bị thuộc sở hữu của bạn, theo quyết định của chính bạn.">Jailbreaking may void your device warranty and violate its terms of service. Use this software only on devices you own, at your own discretion.</p>
+  </div>
+
+  <div class="footer">
+    <a class="back" href="com.0x17.persona.rootless.html" data-en="← Back to Persona" data-vi="← Quay lại Persona">← Back to Persona</a>
+    <span class="date" data-en="Last updated: 2026-09-15" data-vi="Cập nhật lần cuối: 15/09/2026">Last updated: 2026-09-15</span>
+  </div>
+
+</div>
+<script>
+function setLang(l){
+  try { localStorage.setItem('persona-lang', l); } catch(e){}
+  document.querySelectorAll('[data-en]').forEach(function(el){
+    el.textContent = (l === 'vi' && el.dataset.vi) ? el.dataset.vi : el.dataset.en;
+  });
+  document.querySelectorAll('.lang-btn').forEach(function(b){
+    b.classList.toggle('active', b.dataset.lang === l);
+  });
+  document.documentElement.lang = (l === 'vi') ? 'vi' : 'en';
+}
+(function(){
+  var saved = 'en';
+  try { saved = localStorage.getItem('persona-lang') || 'en'; } catch(e){}
+  if (saved !== 'en') setLang(saved);
+})();
+</script>
+</body>
+</html>
