@@ -1,0 +1,17 @@
+Package: com.0x17.persona.rootless
+Version: 2.1.0-54+debug
+Architecture: iphoneos-arm64
+Maintainer: 0x17.dev
+Installed-Size: 10568
+Depends: preferenceloader, firmware (>= 14.0)
+Filename: ./com.0x17.persona.rootless_2.1.0-54+debug_iphoneos-arm64.deb
+Size: 2744756
+MD5sum: 79ebe32606321ef7be8437ea25fe505b
+SHA1: 3abf5069e53809bcb3761c0f6ff61381ca9aff17
+SHA256: 100a622361439aeec59a3592743a07d03c3785d28d41ed71e47ef6b24aa0df42
+Section: Tweaks
+Description: Persona device identity spoofing tweak + companion app (identity, proxy, RRS)
+Tag: role::hacker
+Author: 0x17.dev
+Name: Persona
+
