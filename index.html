@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Persona — Sileo Repository</title>
+<link rel="icon" href="depictions/assets/icon.png">
+<link rel="stylesheet" href="depictions/assets/fonts.css">
+<style>
+:root{
+  --bg:#05060A;
+  --glass:rgba(255,255,255,.06);
+  --glass-border:rgba(255,255,255,.14);
+  --hairline:rgba(255,255,255,.08);
+  --control-fill:rgba(255,255,255,.12);
+  --accent:#D9B469;
+  --ink:#241803;
+  --t1:#F2F4F8;
+  --t2:#9AA3B8;
+  --t3:#6F7890;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased;}
+body{
+  background:var(--bg);
+  background-image:radial-gradient(1200px 600px at 50% -10%, rgba(217,180,105,.07), transparent 60%);
+  font-family:'Manrope',-apple-system,'SF Pro Text',system-ui,sans-serif;
+  color:var(--t1);
+}
+.page{max-width:430px;margin:0 auto;padding:28px 16px 40px;}
+
+.head{display:flex;align-items:center;gap:12px;margin-bottom:24px;}
+.app-icon{
+  width:52px;height:52px;border-radius:13px;flex:none;
+  background:var(--glass);border:1px solid var(--hairline);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+.app-icon img{width:40px;height:40px;border-radius:9px;display:block;}
+.head-txt{flex:1;min-width:0;}
+.head-title{font-family:'Unbounded',sans-serif;font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1;}
+.head-sub{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--t3);margin-top:5px;}
+.lang-toggle{
+  display:flex;gap:2px;flex:none;
+  background:var(--glass);border:1px solid var(--hairline);
+  border-radius:999px;padding:3px;
+}
+.lang-btn{
+  font-family:'Manrope',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.04em;
+  color:var(--t3);background:none;border:none;border-radius:999px;
+  padding:4px 10px;cursor:pointer;
+}
+.lang-btn.active{background:var(--control-fill);color:var(--t1);}
+
+.hero{margin-bottom:24px;}
+.hero h1{font-family:'Unbounded',sans-serif;font-size:30px;font-weight:800;letter-spacing:-.02em;line-height:1.15;}
+.hero p{font-size:14px;color:var(--t2);line-height:1.6;margin-top:10px;}
+
+.section-title{font-size:12px;font-weight:700;color:var(--t2);letter-spacing:.08em;text-transform:uppercase;margin:24px 0 10px;}
+
+.install-card{background:var(--glass);border:1px solid var(--hairline);border-radius:20px;padding:6px 16px;}
+.step{display:flex;align-items:flex-start;gap:12px;padding:13px 0;border-bottom:1px solid var(--hairline);}
+.step:last-child{border-bottom:none;}
+.step-num{
+  width:24px;height:24px;border-radius:7px;flex:none;margin-top:1px;
+  background:rgba(217,180,105,.12);color:var(--accent);
+  font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+}
+.step-txt{font-size:13px;color:var(--t2);line-height:1.55;}
+
+.url-row{
+  display:flex;align-items:center;gap:8px;margin-top:14px;
+  background:rgba(255,255,255,.04);border:1px solid var(--hairline);
+  border-radius:12px;padding:8px 8px 8px 12px;
+}
+.url-txt{
+  flex:1;min-width:0;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--t1);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.copy-btn{
+  flex:none;font-family:'Manrope',sans-serif;font-size:11px;font-weight:700;letter-spacing:.02em;
+  color:var(--ink);background:var(--accent);border:none;border-radius:999px;
+  padding:6px 12px;cursor:pointer;
+}
+.copy-btn:active{opacity:.75;}
+
+.pkg-row{
+  display:flex;align-items:center;gap:12px;padding:12px 14px;margin-bottom:8px;
+  background:var(--glass);border:1px solid var(--hairline);border-radius:16px;
+  text-decoration:none;
+}
+.pkg-row:last-child{margin-bottom:0;}
+.pkg-row img{width:36px;height:36px;border-radius:9px;flex:none;display:block;}
+.pkg-txt{flex:1;min-width:0;}
+.pkg-name{font-size:14px;font-weight:600;color:var(--t1);letter-spacing:-.01em;}
+.pkg-id{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--t3);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.scheme-pill{
+  font-size:9.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;flex:none;
+  color:var(--accent);background:rgba(217,180,105,.12);
+  border:1px solid rgba(217,180,105,.25);border-radius:999px;padding:2px 8px;
+}
+.chev{width:16px;height:16px;color:var(--t3);flex:none;}
+
+.footer{margin-top:30px;border-top:1px solid var(--hairline);padding-top:14px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;}
+.developer{font-size:12px;font-weight:600;color:var(--t3);}
+a.terms{font-size:12px;font-weight:600;color:var(--accent);text-decoration:none;}
+a.terms:active{opacity:.6;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="head">
+    <div class="app-icon"><img src="depictions/assets/icon.png" alt="Persona"></div>
+    <div class="head-txt">
+      <div class="head-title">Persona</div>
+      <div class="head-sub" data-en="Sileo / Cydia repository" data-vi="Kho Sileo / Cydia">Sileo / Cydia repository</div>
+    </div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" data-lang="vi" onclick="setLang('vi')">VI</button>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h1 data-en="Device identity, your way." data-vi="Nhận diện thiết bị, theo cách của bạn.">Device identity, your way.</h1>
+    <p data-en="Persona spoofs device name, model, serial and more — per app — on jailbroken iOS. Built for rootless jailbreaks." data-vi="Persona ngụy trang tên máy, model, serial... — riêng cho từng app — trên iOS jailbreak. Dành cho jailbreak rootless.">Persona spoofs device name, model, serial and more — per app — on jailbroken iOS. Built for rootless jailbreaks.</p>
+  </div>
+
+  <div class="section-title" data-en="Install in Sileo" data-vi="Cài đặt trong Sileo">Install in Sileo</div>
+  <div class="install-card">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-txt" data-en="Open Sileo → Sources → Add" data-vi="Mở Sileo → Sources → Add">Open Sileo → Sources → Add</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-txt" data-en="Paste the source URL below" data-vi="Dán source URL bên dưới">Paste the source URL below</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-txt" data-en="Reload, find Persona and install" data-vi="Reload, tìm Persona và cài đặt">Reload, find Persona and install</div>
+    </div>
+    <div class="url-row">
+      <span class="url-txt" id="src-url">https://staging.0x17.dev/</span>
+      <button class="copy-btn" id="copy-btn" data-en="Copy" data-vi="Sao chép" onclick="copyUrl()">Copy</button>
+    </div>
+  </div>
+
+  <div class="section-title" data-en="Packages" data-vi="Gói">Packages</div>
+  <a class="pkg-row" href="depictions/com.0x17.persona.rootless.html">
+    <img src="depictions/assets/icon.png" alt="">
+    <span class="pkg-txt">
+      <span class="pkg-name" data-en="Persona (Rootless)" data-vi="Persona (Rootless)">Persona (Rootless)</span>
+      <span class="pkg-id">com.0x17.persona.rootless</span>
+    </span>
+    <span class="scheme-pill">Rootless</span>
+    <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+  </a>
+
+  <div class="footer">
+    <span class="developer" data-en="Developed by 0x17.dev" data-vi="Phát triển bởi 0x17.dev">Developed by 0x17.dev</span>
+    <a class="terms" href="depictions/terms.html" data-en="Terms &amp; Disclaimer" data-vi="Điều khoản &amp; Miễn trừ">Terms &amp; Disclaimer</a>
+  </div>
+
+</div>
+<script>
+function copyUrl(){
+  var url = document.getElementById('src-url').textContent;
+  var btn = document.getElementById('copy-btn');
+  var done = function(ok){
+    var vi = document.documentElement.lang === 'vi';
+    btn.textContent = ok ? (vi ? 'Đã copy ✓' : 'Copied ✓') : (vi ? 'Chọn & copy' : 'Select & copy');
+    setTimeout(function(){ setLang(document.documentElement.lang); }, 1500);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(function(){ done(true); }, function(){ fallback(); });
+  } else { fallback(); }
+  function fallback(){
+    var range = document.createRange();
+    range.selectNodeContents(document.getElementById('src-url'));
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    done(false);
+  }
+}
+
+function setLang(l){
+  try { localStorage.setItem('persona-lang', l); } catch(e){}
+  document.querySelectorAll('[data-en]').forEach(function(el){
+    el.textContent = (l === 'vi' && el.dataset.vi) ? el.dataset.vi : el.dataset.en;
+  });
+  document.querySelectorAll('.lang-btn').forEach(function(b){
+    b.classList.toggle('active', b.dataset.lang === l);
+  });
+  document.documentElement.lang = (l === 'vi') ? 'vi' : 'en';
+}
+(function(){
+  var saved = 'en';
+  try { saved = localStorage.getItem('persona-lang') || 'en'; } catch(e){}
+  if (saved !== 'en') setLang(saved);
+})();
+</script>
+</body>
+</html>
