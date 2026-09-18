@@ -1,14 +1,32 @@
+Package: com.0x17.persona.proxy
+Version: 1.0.0-6
+Architecture: iphoneos-arm64
+Maintainer: 0x17.dev
+Installed-Size: 504
+Depends: firmware (>= 12.2) | org.swift.libswift (>= 5.0)
+Conflicts: com.shadowtech.shadowflow.proxy
+Filename: ./com.0x17.persona.proxy_1.0.0-6_iphoneos-arm64.deb
+Size: 94820
+MD5sum: e91e6f80c29643b67c7c35f137e3bcc1
+SHA1: 2bbde93f2595f7d5a3b2c4dc192fb5951fab229b
+SHA256: 5290ce7638a3f2f69100de8a96bce68a30a59e9601f3fb26f9acc71dbef088c9
+Section: Networking
+Description: Local SOCKS/HTTP proxy relay with authentication support (Persona)
+Tag: role::hacker
+Author: 0x17.dev
+Name: PersonaProxy
+
 Package: com.0x17.persona.rootless
-Version: 2.1.0-59
+Version: 2.1.0-74
 Architecture: iphoneos-arm64
 Maintainer: 0x17.dev
 Installed-Size: 10368
-Depends: preferenceloader, firmware (>= 14.0)
-Filename: ./com.0x17.persona.rootless_2.1.0-59_iphoneos-arm64.deb
-Size: 2720538
-MD5sum: efb9ecf4ba98532e26729ec09d60c1b2
-SHA1: 43497ecc2badc59c99711726d7792aca5e943b62
-SHA256: 4d01c73b0b1c895ccf41aab5e6049e42e09bf9a3c18edda5dfb7d3111414cf25
+Depends: preferenceloader, firmware (>= 14.0), com.0x17.persona.proxy
+Filename: ./com.0x17.persona.rootless_2.1.0-74_iphoneos-arm64.deb
+Size: 2725198
+MD5sum: 78b5c657b6d1d302ab925be06dae5feb
+SHA1: 92ed09e0264b6f9287c7f15a048495274a025a77
+SHA256: 3ec8f7263e6653102ddf076b21dc56e5c7c29372fb3171ef4c40fc107b367591
 Section: Tweaks
 Description: Persona device identity spoofing tweak + companion app (identity, proxy, RRS)
 Tag: role::hacker
