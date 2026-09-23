@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Persona — URL Scheme Documentation</title>
+<link rel="icon" href="depictions/assets/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Unbounded:wght@500;800&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#05060A;
+  --glass-fill:rgba(255,255,255,.06);
+  --glass-border:rgba(255,255,255,.14);
+  --hairline:rgba(255,255,255,.08);
+  --control-fill:rgba(255,255,255,.12);
+  --control-border:rgba(255,255,255,.22);
+  --accent:#D9B469;
+  --accent-ink:#241803;
+  --t1:#F2F4F8;
+  --t2:#9AA3B8;
+  --t3:#6F7890;
+  --success:#4ADE80;
+  --warning:#F2C94C;
+  --error:#F87171;
+  --tile-gold:rgba(217,180,105,.12);
+  --tile-blue:rgba(96,165,250,.12);
+  --tile-violet:rgba(167,139,250,.12);
+  --tile-green:rgba(74,222,128,.12);
+  --tile-red:rgba(248,113,113,.12);
+  --r-tile:12px;
+  --r-card:20px;
+  --r-hero:26px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--t1);
+  font-family:'Manrope',-apple-system,'SF Pro Text',system-ui,sans-serif;
+  font-size:15px;
+  line-height:1.6;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:
+    radial-gradient(900px 500px at 50% -10%, rgba(217,180,105,.10), transparent 60%),
+    radial-gradient(700px 500px at -10% 40%, rgba(96,165,250,.05), transparent 60%),
+    radial-gradient(700px 500px at 110% 70%, rgba(167,139,250,.05), transparent 60%);
+}
+body::after{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.wrap{max-width:820px;margin:0 auto;padding:0 20px 80px}
+
+.topbar{
+  position:sticky;top:0;z-index:50;
+  backdrop-filter:blur(24px) saturate(1.4);
+  -webkit-backdrop-filter:blur(24px) saturate(1.4);
+  background:rgba(5,6,10,.72);
+  border-bottom:1px solid var(--hairline);
+}
+.topbar-inner{max-width:820px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:12px}
+.wordmark{font-family:'Unbounded',sans-serif;font-weight:700;font-size:15px;letter-spacing:.02em}
+.wordmark span{color:var(--accent)}
+.topbar .tag{
+  margin-left:auto;font-size:11.5px;font-weight:600;color:var(--t3);
+  border:1px solid var(--hairline);border-radius:999px;padding:4px 12px;
+  background:var(--glass-fill);white-space:nowrap;
+}
+.lang-toggle{display:flex;gap:2px;flex:none;background:var(--glass-fill);border:1px solid var(--hairline);border-radius:999px;padding:3px}
+.lang-btn{
+  font-family:'Manrope',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.04em;
+  color:var(--t3);background:none;border:none;border-radius:999px;padding:4px 10px;cursor:pointer;
+}
+.lang-btn.active{background:var(--control-fill);color:var(--t1);}
+
+.hero{padding:56px 0 8px;text-align:center}
+.hero .kicker{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
+  border:1px solid rgba(217,180,105,.3);border-radius:999px;padding:6px 16px;
+  background:var(--tile-gold);margin-bottom:24px;
+}
+.hero .kicker::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+.hero h1{font-family:'Unbounded',sans-serif;font-weight:800;font-size:clamp(32px,6.5vw,52px);line-height:1.08;letter-spacing:-.01em}
+.hero h1 .grad{
+  background:linear-gradient(100deg,#F2DCA8 0%,var(--accent) 45%,#A98436 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero p.sub{color:var(--t2);max-width:580px;margin:18px auto 0;font-size:15px}
+
+.format-card{
+  margin:30px auto 0;max-width:640px;text-align:left;
+  background:var(--glass-fill);border:1px solid var(--glass-border);
+  border-radius:var(--r-hero);padding:20px 22px;
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+}
+.format-card .label{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);margin-bottom:10px}
+.code-line{
+  font-family:'IBM Plex Mono',monospace;font-size:14px;line-height:1.7;
+  background:rgba(0,0,0,.35);border:1px solid var(--hairline);
+  border-radius:var(--r-tile);padding:13px 16px;overflow-x:auto;white-space:nowrap;color:var(--t2);
+}
+.code-line .scheme{color:var(--t3)}
+.code-line .action{color:var(--accent);font-weight:500}
+.code-line .key{color:#60A5FA}
+.code-line .val{color:var(--success)}
+
+.rules{margin-top:22px;display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:left}
+.rule{
+  background:var(--glass-fill);border:1px solid var(--hairline);border-radius:var(--r-card);
+  padding:15px 17px;font-size:13px;color:var(--t2);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+}
+.rule b{display:block;color:var(--t1);font-size:13px;font-weight:700;margin-bottom:4px}
+.rule code{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);background:rgba(217,180,105,.08);padding:1px 6px;border-radius:6px;white-space:nowrap}
+
+.toc-title{margin:34px 0 10px;font-size:12px;font-weight:700;color:var(--t2);letter-spacing:.08em;text-transform:uppercase}
+.toc{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:8px;text-align:left}
+.toc a{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--t2);text-decoration:none;
+  background:var(--glass-fill);border:1px solid var(--hairline);border-radius:10px;padding:9px 12px;
+  transition:border-color .2s,color .2s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.toc a:hover{border-color:rgba(217,180,105,.4);color:var(--accent)}
+
+.filter-row{margin:34px 0 8px;display:flex;align-items:center;gap:12px}
+.filter-input{
+  flex:1;background:var(--control-fill);border:1px solid var(--control-border);
+  border-radius:999px;padding:12px 20px;color:var(--t1);
+  font-family:'Manrope',sans-serif;font-size:14.5px;font-weight:500;outline:none;
+  transition:border-color .2s, box-shadow .2s;
+}
+.filter-input::placeholder{color:var(--t3)}
+.filter-input:focus{border-color:rgba(217,180,105,.55);box-shadow:0 0 0 3px rgba(217,180,105,.14)}
+.count-pill{font-size:12px;font-weight:700;color:var(--t3);white-space:nowrap}
+
+section.cat{margin-top:38px}
+.cat-head{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.tile{
+  width:42px;height:42px;border-radius:var(--r-tile);flex:none;
+  display:flex;align-items:center;justify-content:center;border:1px solid var(--hairline);
+}
+.tile svg{width:20px;height:20px}
+.cat-head h2{font-family:'Unbounded',sans-serif;font-weight:700;font-size:17px;letter-spacing:.01em}
+.cat-head .cat-sub{font-size:12.5px;color:var(--t3);margin-top:2px}
+
+.action-card{
+  background:var(--glass-fill);border:1px solid var(--glass-border);
+  border-radius:var(--r-card);padding:18px 20px;margin-bottom:12px;
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  transition:border-color .25s;
+}
+.action-card[id]{scroll-margin-top:84px}
+.action-card:hover{border-color:rgba(217,180,105,.35)}
+.action-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.action-url{font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:500;color:var(--accent)}
+.badge{
+  font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--t3);background:var(--control-fill);border-radius:999px;padding:3px 9px;white-space:nowrap;
+}
+.action-desc{color:var(--t2);font-size:13.5px;margin-top:8px}
+
+.syntax{
+  margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:13px;line-height:1.7;
+  background:rgba(0,0,0,.35);border:1px solid var(--hairline);
+  border-radius:var(--r-tile);padding:11px 14px;overflow-x:auto;white-space:nowrap;color:var(--t2);
+}
+.syntax .scheme{color:var(--t3)}
+.syntax .action{color:var(--accent)}
+.syntax .key{color:#60A5FA}
+.syntax .ph{color:var(--warning)}
+
+.ex-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);margin-top:16px;margin-bottom:8px}
+.ex-group{display:flex;flex-direction:column;gap:8px}
+.example-row{display:flex;align-items:center;gap:10px}
+.example{
+  flex:1;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--t2);
+  background:rgba(0,0,0,.35);border:1px solid var(--hairline);
+  border-radius:var(--r-tile);padding:10px 14px;overflow-x:auto;white-space:nowrap;
+}
+.example .scheme{color:var(--t3)}
+.example .action{color:var(--accent)}
+.example .k{color:#60A5FA}.example .v{color:var(--success)}
+.copy-btn{
+  flex:none;display:flex;align-items:center;gap:7px;cursor:pointer;
+  background:var(--control-fill);border:1px solid var(--control-border);
+  border-radius:10px;padding:9px 14px;color:var(--t1);
+  font-family:'Manrope',sans-serif;font-size:12.5px;font-weight:700;
+  transition:background .2s,border-color .2s,color .2s;
+}
+.copy-btn:hover{background:rgba(255,255,255,.18)}
+.copy-btn:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(217,180,105,.18)}
+.copy-btn svg{width:14px;height:14px}
+.copy-btn.copied{background:rgba(74,222,128,.16);border-color:rgba(74,222,128,.5);color:var(--success)}
+
+details.params{margin-top:14px;border-top:1px solid var(--hairline);padding-top:10px}
+details.params summary{
+  cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;
+  font-size:12.5px;font-weight:700;color:var(--t2);letter-spacing:.04em;text-transform:uppercase;user-select:none;
+}
+details.params summary::-webkit-details-marker{display:none}
+details.params summary .chev{transition:transform .25s;color:var(--t3)}
+details.params[open] summary .chev{transform:rotate(90deg)}
+.ptable{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px}
+.ptable th{
+  text-align:left;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--t3);padding:0 10px 8px;border-bottom:1px solid var(--hairline);
+}
+.ptable td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:top;color:var(--t2)}
+.ptable tr:last-child td{border-bottom:none}
+.ptable .pk{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--t1);white-space:nowrap}
+.pill{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.03em;border-radius:999px;padding:2px 9px;white-space:nowrap}
+.pill.bool{background:var(--tile-blue);color:#93C5FD}
+.pill.int{background:var(--tile-violet);color:#C4B5FD}
+.pill.str{background:var(--tile-green);color:#86EFAC}
+.pill.enum{background:var(--tile-gold);color:var(--accent)}
+.pill.list{background:var(--tile-red);color:#FCA5A5}
+.req{color:var(--error);font-weight:700;font-size:11px;margin-left:6px;white-space:nowrap}
+
+.trigger-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.trigger{background:var(--glass-fill);border:1px solid var(--hairline);border-radius:var(--r-card);padding:16px 18px;font-size:13px;color:var(--t2)}
+.trigger b{display:block;color:var(--t1);font-size:13px;margin-bottom:8px}
+.trigger pre{
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;line-height:1.6;color:var(--t2);
+  background:rgba(0,0,0,.35);border:1px solid var(--hairline);border-radius:10px;
+  padding:10px 12px;overflow-x:auto;white-space:pre;margin-top:8px;
+}
+.trigger pre .hl{color:var(--accent)}
+
+footer{margin-top:64px;text-align:center;color:var(--t3);font-size:12.5px}
+footer .fmark{font-family:'Unbounded',sans-serif;font-weight:700;font-size:13px;color:var(--t2);margin-bottom:6px}
+footer .fmark span{color:var(--accent)}
+
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s cubic-bezier(.2,.7,.3,1),transform .6s cubic-bezier(.2,.7,.3,1)}
+.reveal.in{opacity:1;transform:none}
+
+@media (max-width:640px){
+  .rules{grid-template-columns:1fr}
+  .trigger-grid{grid-template-columns:1fr}
+  .hero{padding-top:40px}
+  .topbar .tag{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="wordmark">Per<span>sona</span></div>
+    <div class="tag">persona:// &middot; com.0x17.persona</div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" data-lang="vi" onclick="setLang('vi')">VI</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="hero reveal in">
+    <div class="kicker" data-en="Documentation" data-vi="Tài liệu">Documentation</div>
+    <h1>URL Scheme<br><span class="grad">persona://</span></h1>
+    <p class="sub" data-en="Complete reference for every persona:// command — what it does, its parameters, and ready-to-copy examples. Trigger from Shortcuts, Safari, or a Mac terminal. The app must be installed and running (foreground or background)." data-vi="Tham khảo đầy đủ mọi lệnh persona:// — chức năng, tham số và ví dụ sẵn sàng để copy. Trigger từ Shortcuts, Safari hoặc terminal Mac. App phải đã cài đặt và đang chạy (foreground hoặc background).">Complete reference for every persona:// command — what it does, its parameters, and ready-to-copy examples. Trigger from Shortcuts, Safari, or a Mac terminal. The app must be installed and running (foreground or background).</p>
+
+    <div class="format-card">
+      <div class="label" data-en="General format" data-vi="Định dạng chung">General format</div>
+      <div class="code-line"><span class="scheme">persona://</span><span class="action">&lt;action&gt;</span>?<span class="key">key1</span>=<span class="val">value1</span>&amp;<span class="key">key2</span>=<span class="val">value2</span></div>
+    </div>
+
+    <div class="rules">
+      <div class="rule"><b data-en="Booleans" data-vi="Boolean">Booleans</b><span data-en="Use " data-vi="Dùng ">Use </span><code>true</code>/<code>false</code><span data-en=" or " data-vi=" hoặc "> or </span><code>1</code>/<code>0</code>.</div>
+      <div class="rule"><b data-en="Repeatable params" data-vi="Tham số lặp lại">Repeatable params</b><span data-en="Same key multiple times for lists: " data-vi="Lặp lại cùng key cho danh sách: ">Same key multiple times for lists: </span><code>&amp;bundleId=com.a&amp;bundleId=com.b</code></div>
+      <div class="rule"><b>URL encoding</b><span data-en="Special characters must be encoded (@ → %40, space → %20). The app decodes automatically, including double-encoding from devicectl." data-vi="Ký tự đặc biệt phải encode (@ → %40, khoảng trắng → %20). App tự decode, kể cả double-encoding từ devicectl.">Special characters must be encoded (@ → %40, space → %20). The app decodes automatically, including double-encoding from devicectl.</span></div>
+      <div class="rule"><b>Async</b><span data-en="Actions run in the background — results appear as alerts inside the app; nothing is returned over the URL." data-vi="Action chạy nền — kết quả hiện dạng alert trong app, không trả về giá trị qua URL.">Actions run in the background — results appear as alerts inside the app; nothing is returned over the URL.</span></div>
+    </div>
+
+    <div class="toc-title" data-en="Commands" data-vi="Các lệnh">Commands</div>
+    <div class="toc">
+      <a href="#a-proxy-enable">persona://proxy-enable</a>
+      <a href="#a-proxy-disable">persona://proxy-disable</a>
+      <a href="#a-rotate-proxy">persona://rotate-proxy</a>
+      <a href="#a-reset-data">persona://reset-data</a>
+      <a href="#a-backup-reset">persona://backup-reset</a>
+      <a href="#a-backup">persona://backup</a>
+      <a href="#a-restore">persona://restore</a>
+      <a href="#a-login-itunes">persona://login-itunes</a>
+      <a href="#a-itunes-status">persona://itunes-status</a>
+      <a href="#a-logout-itunes">persona://logout-itunes</a>
+      <a href="#a-identity">persona://identity</a>
+      <a href="#a-config">persona://config</a>
+      <a href="#a-general">persona://general</a>
+      <a href="#a-proxy">persona://proxy</a>
+      <a href="#a-rrs">persona://rrs</a>
+      <a href="#a-open-settings">persona://open-settings</a>
+    </div>
+  </div>
+
+  <div class="filter-row reveal">
+    <input id="filter" class="filter-input" type="search" placeholder="Filter commands… (e.g. proxy, backup, login)" autocomplete="off">
+    <span class="count-pill" id="count"></span>
+  </div>
+
+  <!-- ============ PROXY CONTROL ============ -->
+  <section class="cat reveal" data-search="proxy-enable proxy-disable rotate-proxy proxy bật tắt xoay ip relay">
+    <div class="cat-head">
+      <div class="tile" style="background:var(--tile-blue)"><svg viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3.6 9h16.8M3.6 15h16.8M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg></div>
+      <div><h2>Proxy Control</h2><div class="cat-sub" data-en="Turn on / off / rotate the system proxy" data-vi="Bật / tắt / xoay system proxy">Turn on / off / rotate the system proxy</div></div>
+    </div>
+
+    <div class="action-card" id="a-proxy-enable" data-search="proxy-enable bật proxy">
+      <div class="action-top"><span class="action-url">persona://proxy-enable</span><span class="badge" data-en="no params" data-vi="không có tham số">no params</span></div>
+      <div class="action-desc" data-en="Turn on the system proxy using the current proxy settings (relay or direct mode)." data-vi="Bật system proxy theo cấu hình proxy hiện tại (chế độ relay hoặc direct).">Turn on the system proxy using the current proxy settings (relay or direct mode).</div>
+      <div class="ex-label" data-en="Examples" data-vi="Ví dụ">Examples</div>
+      <div class="ex-group">
+        <div class="example-row">
+          <div class="example" data-copy="persona://proxy-enable"><span class="scheme">persona://</span><span class="action">proxy-enable</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-card" id="a-proxy-disable" data-search="proxy-disable tắt proxy">
+      <div class="action-top"><span class="action-url">persona://proxy-disable</span><span class="badge" data-en="no params" data-vi="không có tham số">no params</span></div>
+      <div class="action-desc" data-en="Turn off the system proxy." data-vi="Tắt system proxy.">Turn off the system proxy.</div>
+      <div class="ex-label" data-en="Examples" data-vi="Ví dụ">Examples</div>
+      <div class="ex-group">
+        <div class="example-row">
+          <div class="example" data-copy="persona://proxy-disable"><span class="scheme">persona://</span><span class="action">proxy-disable</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-card" id="a-rotate-proxy" data-search="rotate-proxy xoay proxy ip host port">
+      <div class="action-top"><span class="action-url">persona://rotate-proxy</span><span class="badge" data-en="5 params" data-vi="5 tham số">5 params</span></div>
+      <div class="action-desc" data-en="Advance to the next proxy in the configured list. If both host and port are provided, point directly at that remote proxy instead of rotating." data-vi="Chuyển sang proxy tiếp theo trong danh sách. Nếu truyền cả host và port thì trỏ thẳng tới remote proxy đó thay vì xoay vòng.">Advance to the next proxy in the configured list. If both host and port are provided, point directly at that remote proxy instead of rotating.</div>
+      <details class="params" open>
+        <summary><svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg><span data-en="Parameters" data-vi="Tham số">Parameters</span></summary>
+        <table class="ptable">
+          <tr><th>Key</th><th>Type</th><th data-en="Description" data-vi="Mô tả">Description</th></tr>
+          <tr><td class="pk">host</td><td><span class="pill str">string</span></td><td data-en="Remote proxy address (optional)" data-vi="Địa chỉ remote proxy (tùy chọn)">Remote proxy address (optional)</td></tr>
+          <tr><td class="pk">port</td><td><span class="pill int">int</span></td><td data-en="Remote proxy port (optional)" data-vi="Cổng remote proxy (tùy chọn)">Remote proxy port (optional)</td></tr>
+          <tr><td class="pk">user</td><td><span class="pill str">string</span></td><td data-en="Proxy account (optional)" data-vi="Tài khoản proxy (tùy chọn)">Proxy account (optional)</td></tr>
+          <tr><td class="pk">pass</td><td><span class="pill str">string</span></td><td data-en="Proxy password — encode special characters (optional)" data-vi="Mật khẩu proxy — nhớ encode ký tự đặc biệt (tùy chọn)">Proxy password — encode special characters (optional)</td></tr>
+          <tr><td class="pk">save</td><td><span class="pill bool">bool</span></td><td data-en="Save the proxy to the list" data-vi="Lưu proxy vào danh sách">Save the proxy to the list</td></tr>
+        </table>
+      </details>
+      <div class="ex-label" data-en="Examples" data-vi="Ví dụ">Examples</div>
+      <div class="ex-group">
+        <div class="example-row">
+          <div class="example" data-copy="persona://rotate-proxy"><span class="scheme">persona://</span><span class="action">rotate-proxy</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+        <div class="example-row">
+          <div class="example" data-copy="persona://rotate-proxy?host=198.51.100.7&port=1080&user=admin&pass=p%40ss&save=true"><span class="scheme">persona://</span><span class="action">rotate-proxy</span>?<span class="k">host</span>=<span class="v">198.51.100.7</span>&amp;<span class="k">port</span>=<span class="v">1080</span>&amp;<span class="k">user</span>=<span class="v">admin</span>&amp;<span class="k">pass</span>=<span class="v">p%40ss</span>&amp;<span class="k">save</span>=<span class="v">true</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DATA MANAGEMENT ============ -->
+  <section class="cat reveal" data-search="reset-data backup-reset reset xoá dữ liệu app bundleId hardware firmware region">
+    <div class="cat-head">
+      <div class="tile" style="background:var(--tile-red)"><svg viewBox="0 0 24 24" fill="none" stroke="#F87171" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M10 11v6M14 11v6"/></svg></div>
+      <div><h2>Data Management</h2><div class="cat-sub" data-en="Reset / backup + reset app data" data-vi="Reset / backup + reset dữ liệu app">Reset / backup + reset app data</div></div>
+    </div>
+
+    <div class="action-card" id="a-reset-data" data-search="reset-data reset dữ liệu app">
+      <div class="action-top"><span class="action-url">persona://reset-data</span><span class="badge" data-en="8 params" data-vi="8 tham số">8 params</span></div>
+      <div class="action-desc" data-en="Reset data of the apps ticked in App Targeting, or of specific bundle IDs. Optionally applies a new device identity (hardware / firmware / region); omitted keys keep the current selection." data-vi="Reset dữ liệu các app đã tick trong App Targeting, hoặc các bundle ID chỉ định. Có thể kèm bộ nhận diện mới (hardware / firmware / region); key bỏ trống giữ nguyên giá trị đang chọn.">Reset data of the apps ticked in App Targeting, or of specific bundle IDs. Optionally applies a new device identity (hardware / firmware / region); omitted keys keep the current selection.</div>
+      <details class="params" open>
+        <summary><svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg><span data-en="Parameters" data-vi="Tham số">Parameters</span></summary>
+        <table class="ptable">
+          <tr><th>Key</th><th>Type</th><th data-en="Description" data-vi="Mô tả">Description</th></tr>
+          <tr><td class="pk">bundleId</td><td><span class="pill list">list</span></td><td data-en="Bundle IDs to reset — repeat for multiple apps. Omit = use the ticked list in the app" data-vi="Bundle ID cần reset — lặp lại cho nhiều app. Bỏ trống = dùng danh sách đã tick trong app">Bundle IDs to reset — repeat for multiple apps. Omit = use the ticked list in the app</td></tr>
+          <tr><td class="pk">hardware</td><td><span class="pill str">string</span></td><td data-en="Device model, e.g. iPhone 14 Pro or identifier iPhone15,2 (optional)" data-vi="Mô hình device, vd iPhone 14 Pro hoặc identifier iPhone15,2 (tùy chọn)">Device model, e.g. iPhone 14 Pro or identifier iPhone15,2 (optional)</td></tr>
+          <tr><td class="pk">firmware</td><td><span class="pill str">string</span></td><td data-en="iOS version, e.g. 17.4.1 (optional)" data-vi="Phiên bản iOS, vd 17.4.1 (tùy chọn)">iOS version, e.g. 17.4.1 (optional)</td></tr>
+          <tr><td class="pk">country</td><td><span class="pill str">string</span></td><td rowspan="5" style="vertical-align:middle;color:var(--t3)" data-en="Region set — applied only if at least one key is present. Defaults: United States / US / 37.09, -95.71 / America/New_York" data-vi="Region set — chỉ áp dụng nếu truyền ít nhất 1 key. Mặc định: United States / US / 37.09, -95.71 / America/New_York">Region set — applied only if at least one key is present. Defaults: United States / US / 37.09, -95.71 / America/New_York</td></tr>
+          <tr><td class="pk">countryCode</td><td><span class="pill str">string</span></td></tr>
+          <tr><td class="pk">lat</td><td><span class="pill int">float</span></td></tr>
+          <tr><td class="pk">lon</td><td><span class="pill int">float</span></td></tr>
+          <tr><td class="pk">timezone</td><td><span class="pill str">string</span></td></tr>
+        </table>
+      </details>
+      <div class="ex-label" data-en="Examples" data-vi="Ví dụ">Examples</div>
+      <div class="ex-group">
+        <div class="example-row">
+          <div class="example" data-copy="persona://reset-data"><span class="scheme">persona://</span><span class="action">reset-data</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+        <div class="example-row">
+          <div class="example" data-copy="persona://reset-data?bundleId=com.zalo.text&bundleId=com.facebook.Facebook"><span class="scheme">persona://</span><span class="action">reset-data</span>?<span class="k">bundleId</span>=<span class="v">com.zalo.text</span>&amp;<span class="k">bundleId</span>=<span class="v">com.facebook.Facebook</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+        <div class="example-row">
+          <div class="example" data-copy="persona://reset-data?bundleId=com.instagram.app&hardware=iPhone15,2&firmware=18.1&countryCode=VN&timezone=Asia%2FHo_Chi_Minh"><span class="scheme">persona://</span><span class="action">reset-data</span>?<span class="k">bundleId</span>=<span class="v">com.instagram.app</span>&amp;<span class="k">hardware</span>=<span class="v">iPhone15,2</span>&amp;<span class="k">firmware</span>=<span class="v">18.1</span>&amp;<span class="k">countryCode</span>=<span class="v">VN</span>&amp;<span class="k">timezone</span>=<span class="v">Asia%2FHo_Chi_Minh</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-card" id="a-backup-reset" data-search="backup-reset backup rồi reset">
+      <div class="action-top"><span class="action-url">persona://backup-reset</span><span class="badge" data-en="10 params" data-vi="10 tham số">10 params</span></div>
+      <div class="action-desc" data-en="Create a backup first, then reset data. Same parameters as reset-data, plus name and comment for the backup." data-vi="Tạo backup trước, sau đó reset dữ liệu. Cùng tham số với reset-data, thêm tên + chú thích cho backup.">Create a backup first, then reset data. Same parameters as reset-data, plus name and comment for the backup.</div>
+      <details class="params" open>
+        <summary><svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg><span data-en="Parameters" data-vi="Tham số">Parameters</span></summary>
+        <table class="ptable">
+          <tr><th>Key</th><th>Type</th><th data-en="Description" data-vi="Mô tả">Description</th></tr>
+          <tr><td class="pk">name</td><td><span class="pill str">string</span></td><td data-en="Backup name (optional)" data-vi="Tên backup (tùy chọn)">Backup name (optional)</td></tr>
+          <tr><td class="pk">comment</td><td><span class="pill str">string</span></td><td data-en="Backup comment (optional)" data-vi="Chú thích backup (tùy chọn)">Backup comment (optional)</td></tr>
+          <tr><td class="pk">bundleId</td><td><span class="pill list">list</span></td><td data-en="As in reset-data — repeat for multiple apps" data-vi="Như reset-data — lặp lại cho nhiều app">As in reset-data — repeat for multiple apps</td></tr>
+          <tr><td class="pk">hardware / firmware / region…</td><td><span class="pill str">—</span></td><td data-en="Same parameter groups as reset-data" data-vi="Nhóm tham số như reset-data">Same parameter groups as reset-data</td></tr>
+        </table>
+      </details>
+      <div class="ex-label" data-en="Examples" data-vi="Ví dụ">Examples</div>
+      <div class="ex-group">
+        <div class="example-row">
+          <div class="example" data-copy="persona://backup-reset?name=Before%20Update&comment=v17"><span class="scheme">persona://</span><span class="action">backup-reset</span>?<span class="k">name</span>=<span class="v">Before%20Update</span>&amp;<span class="k">comment</span>=<span class="v">v17</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+        <div class="example-row">
+          <div class="example" data-copy="persona://backup-reset?name=Weekly&bundleId=com.zalo.text&hardware=iPhone14%20Pro"><span class="scheme">persona://</span><span class="action">backup-reset</span>?<span class="k">name</span>=<span class="v">Weekly</span>&amp;<span class="k">bundleId</span>=<span class="v">com.zalo.text</span>&amp;<span class="k">hardware</span>=<span class="v">iPhone14%20Pro</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BACKUP & RESTORE ============ -->
+  <section class="cat reveal" data-search="backup restore rrs sao lưu phục hồi">
+    <div class="cat-head">
+      <div class="tile" style="background:var(--tile-green)"><svg viewBox="0 0 24 24" fill="none" stroke="#4ADE80" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg></div>
+      <div><h2>Backup &amp; Restore</h2><div class="cat-sub" data-en="RRS — app data backup &amp; restore" data-vi="RRS — sao lưu &amp; phục hồi dữ liệu app">RRS — app data backup &amp; restore</div></div>
+    </div>
+
+    <div class="action-card" id="a-backup" data-search="backup tạo backup rrs">
+      <div class="action-top"><span class="action-url">persona://backup</span><span class="badge" data-en="3 params" data-vi="3 tham số">3 params</span></div>
+      <div class="action-desc" data-en="Create an RRS backup for the ticked apps (or the bundle IDs passed in)." data-vi="Tạo backup RRS cho các app đã tick (hoặc bundleId truyền vào).">Create an RRS backup for the ticked apps (or the bundle IDs passed in).</div>
+      <details class="params" open>
+        <summary><svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg><span data-en="Parameters" data-vi="Tham số">Parameters</span></summary>
+        <table class="ptable">
+          <tr><th>Key</th><th>Type</th><th data-en="Description" data-vi="Mô tả">Description</th></tr>
+          <tr><td class="pk">name</td><td><span class="pill str">string</span></td><td data-en="Backup name (optional)" data-vi="Tên backup (tùy chọn)">Backup name (optional)</td></tr>
+          <tr><td class="pk">comment</td><td><span class="pill str">string</span></td><td data-en="Comment (optional)" data-vi="Chú thích (tùy chọn)">Comment (optional)</td></tr>
+          <tr><td class="pk">bundleId</td><td><span class="pill list">list</span></td><td data-en="Repeat for multiple apps; omit = ticked list" data-vi="Lặp lại cho nhiều app; bỏ trống = danh sách đã tick">Repeat for multiple apps; omit = ticked list</td></tr>
+        </table>
+      </details>
+      <div class="ex-label" data-en="Examples" data-vi="Ví dụ">Examples</div>
+      <div class="ex-group">
+        <div class="example-row">
+          <div class="example" data-copy="persona://backup?name=Weekly"><span class="scheme">persona://</span><span class="action">backup</span>?<span class="k">name</span>=<span class="v">Weekly</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+        <div class="example-row">
+          <div class="example" data-copy="persona://backup?name=Pre-wipe&comment=sao-luu-truoc-wipe&bundleId=com.zalo.text&bundleId=com.facebook.Facebook"><span class="scheme">persona://</span><span class="action">backup</span>?<span class="k">name</span>=<span class="v">Pre-wipe</span>&amp;<span class="k">comment</span>=<span class="v">sao-luu-truoc-wipe</span>&amp;<span class="k">bundleId</span>=<span class="v">com.zalo.text</span>&amp;<span class="k">bundleId</span>=<span class="v">com.facebook.Facebook</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-card" id="a-restore" data-search="restore phục hồi backup theo tên">
+      <div class="action-top"><span class="action-url">persona://restore</span><span class="badge" data-en="1 param" data-vi="1 tham số">1 param</span></div>
+      <div class="action-desc" data-en="Restore a backup by name." data-vi="Phục hồi backup theo tên.">Restore a backup by name.</div>
+      <div class="syntax"><span class="scheme">persona://</span><span class="action">restore</span>?<span class="key">name</span>=<span class="ph">&lt;backup-name&gt;</span></div>
+      <details class="params" open>
+        <summary><svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg><span data-en="Parameters" data-vi="Tham số">Parameters</span></summary>
+        <table class="ptable">
+          <tr><th>Key</th><th>Type</th><th data-en="Description" data-vi="Mô tả">Description</th></tr>
+          <tr><td class="pk">name<span class="req" data-en="required" data-vi="bắt buộc">required</span></td><td><span class="pill str">string</span></td><td data-en="Name of the backup to restore" data-vi="Tên backup cần phục hồi">Name of the backup to restore</td></tr>
+        </table>
+      </details>
+      <div class="ex-label" data-en="Examples" data-vi="Ví dụ">Examples</div>
+      <div class="ex-group">
+        <div class="example-row">
+          <div class="example" data-copy="persona://restore?name=Weekly"><span class="scheme">persona://</span><span class="action">restore</span>?<span class="k">name</span>=<span class="v">Weekly</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ APP STORE ACCOUNT ============ -->
+  <section class="cat reveal" data-search="login-itunes itunes-status logout-itunes app store apple id đăng nhập 2fa">
+    <div class="cat-head">
+      <div class="tile" style="background:var(--tile-gold)"><svg viewBox="0 0 24 24" fill="none" stroke="#D9B469" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l1 13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1L6 7z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg></div>
+      <div><h2>App Store Account</h2><div class="cat-sub" data-en="Sign in / out of the App Store Apple ID" data-vi="Đăng nhập / đăng xuất Apple ID cho App Store">Sign in / out of the App Store Apple ID</div></div>
+    </div>
+
+    <div class="action-card" id="a-login-itunes" data-search="login-itunes đăng nhập app store apple id user pass 2fa">
+      <div class="action-top"><span class="action-url">persona://login-itunes</span><span class="badge" data-en="2 params" data-vi="2 tham số">2 params</span></div>
+      <div class="action-desc" data-en="Sign in to the App Store with an Apple ID (user and pass are both required). If the account needs a one-time 2FA check on this device, an alert tells you to finish via the Login App Store button in Settings." data-vi="Đăng nhập App Store bằng Apple ID (cần cả user và pass). Nếu tài khoản cần xác thực 2FA một lần trên device này, app hiện alert hướng dẫn dùng nút Login App Store trong Settings để hoàn tất.">Sign in to the App Store with an Apple ID (user and pass are both required). If the account needs a one-time 2FA check on this device, an alert tells you to finish via the Login App Store button in Settings.</div>
+      <div class="syntax"><span class="scheme">persona://</span><span class="action">login-itunes</span>?<span class="key">user</span>=<span class="ph">&lt;email&gt;</span>&amp;<span class="key">pass</span>=<span class="ph">&lt;password&gt;</span></div>
+      <details class="params" open>
+        <summary><svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg><span data-en="Parameters" data-vi="Tham số">Parameters</span></summary>
+        <table class="ptable">
+          <tr><th>Key</th><th>Type</th><th data-en="Description" data-vi="Mô tả">Description</th></tr>
+          <tr><td class="pk">user<span class="req" data-en="required" data-vi="bắt buộc">required</span></td><td><span class="pill str">string</span></td><td data-en="Apple ID email — encode @ as %40" data-vi="Email Apple ID — encode dấu @ thành %40">Apple ID email — encode @ as %40</td></tr>
+          <tr><td class="pk">pass<span class="req" data-en="required" data-vi="bắt buộc">required</span></td><td><span class="pill str">string</span></td><td data-en="Password — encode all special characters" data-vi="Mật khẩu — encode mọi ký tự đặc biệt">Password — encode all special characters</td></tr>
+        </table>
+      </details>
+      <div class="ex-label" data-en="Examples" data-vi="Ví dụ">Examples</div>
+      <div class="ex-group">
+        <div class="example-row">
+          <div class="example" data-copy="persona://login-itunes?user=you%40example.com&pass=YourP%40ss123"><span class="scheme">persona://</span><span class="action">login-itunes</span>?<span class="k">user</span>=<span class="v">you%40example.com</span>&amp;<span class="k">pass</span>=<span class="v">YourP%40ss123</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-card" id="a-itunes-status" data-search="itunes-status trạng thái tài khoản app store">
+      <div class="action-top"><span class="action-url">persona://itunes-status</span><span class="badge" data-en="no params" data-vi="không có tham số">no params</span></div>
+      <div class="action-desc" data-en="Show the current App Store account state." data-vi="Hiển thị trạng thái tài khoản App Store hiện tại.">Show the current App Store account state.</div>
+      <div class="ex-label" data-en="Examples" data-vi="Ví dụ">Examples</div>
+      <div class="ex-group">
+        <div class="example-row">
+          <div class="example" data-copy="persona://itunes-status"><span class="scheme">persona://</span><span class="action">itunes-status</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-card" id="a-logout-itunes" data-search="logout-itunes đăng xuất app store">
+      <div class="action-top"><span class="action-url">persona://logout-itunes</span><span class="badge" data-en="no params" data-vi="không có tham số">no params</span></div>
+      <div class="action-desc" data-en="Sign out of the App Store account and wipe the system account store (kills accountsd/amsaccountsd, clears /var/mobile/Library/Accounts)." data-vi="Đăng xuất tài khoản App Store và xoá kho tài khoản hệ thống (kill accountsd/amsaccountsd, clear /var/mobile/Library/Accounts).">Sign out of the App Store account and wipe the system account store (kills accountsd/amsaccountsd, clears /var/mobile/Library/Accounts).</div>
+      <div class="ex-label" data-en="Examples" data-vi="Ví dụ">Examples</div>
+      <div class="ex-group">
+        <div class="example-row">
+          <div class="example" data-copy="persona://logout-itunes"><span class="scheme">persona://</span><span class="action">logout-itunes</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ IDENTITY ============ -->
+  <section class="cat reveal" data-search="identity override device udid location locale timezone browser webrtc targeting bundleId">
+    <div class="cat-head">
+      <div class="tile" style="background:var(--tile-violet)"><svg viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6l7-3z"/><path d="M9.5 12l2 2 3.5-4"/></svg></div>
+      <div><h2>Identity</h2><div class="cat-sub" data-en="Overrides + app targeting — saving re-applies injection list &amp; timezone" data-vi="Overrides + app targeting — lưu xong tự re-apply injection list &amp; múi giờ">Overrides + app targeting — saving re-applies injection list &amp; timezone</div></div>
+    </div>
+
+    <div class="action-card" id="a-identity" data-search="identity cập nhật identity overrides targeting">
+      <div class="action-top"><span class="action-url">persona://identity</span><span class="badge" data-en="19 params" data-vi="19 tham số">19 params</span></div>
+      <div class="action-desc" data-en="Update identity overrides and the app targeting list. Ticked apps = targeted apps (used by injection and backup/reset/wipe/clear alike)." data-vi="Cập nhật các identity override và danh sách app targeting. App đã tick = app bị target (dùng chung cho injection lẫn backup/reset/wipe/clear).">Update identity overrides and the app targeting list. Ticked apps = targeted apps (used by injection and backup/reset/wipe/clear alike).</div>
+      <details class="params" open>
+        <summary><svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg><span data-en="Parameters" data-vi="Tham số">Parameters</span></summary>
+        <table class="ptable">
+          <tr><th>Key</th><th>Type</th><th data-en="Description" data-vi="Mô tả">Description</th></tr>
+          <tr><td class="pk">overrideDevice</td><td><span class="pill bool">bool</span></td><td data-en="Fake device model / name" data-vi="Gia mạo model / tên device">Fake device model / name</td></tr>
+          <tr><td class="pk">overrideHardware</td><td><span class="pill bool">bool</span></td><td data-en="Fake hardware specs" data-vi="Gia mạo thông số phần cứng">Fake hardware specs</td></tr>
+          <tr><td class="pk">overrideOSVersion</td><td><span class="pill bool">bool</span></td><td data-en="Fake iOS version" data-vi="Gia mạo phiên bản iOS">Fake iOS version</td></tr>
+          <tr><td class="pk">overrideScreen</td><td><span class="pill bool">bool</span></td><td data-en="Fake logical screen size" data-vi="Gia mạo kích thước màn hình (logical)">Fake logical screen size</td></tr>
+          <tr><td class="pk">overrideRealScreen</td><td><span class="pill bool">bool</span></td><td data-en="Fake native resolution" data-vi="Gia mạo độ phân giải thực tế">Fake native resolution</td></tr>
+          <tr><td class="pk">overrideHomeButton</td><td><span class="pill bool">bool</span></td><td data-en="Fake home-button presence" data-vi="Gia mạo sự hiện diện nút Home">Fake home-button presence</td></tr>
+          <tr><td class="pk">overrideNetwork</td><td><span class="pill bool">bool</span></td><td data-en="Fake network / carrier info" data-vi="Gia mạo thông tin mạng / carrier">Fake network / carrier info</td></tr>
+          <tr><td class="pk">overrideWifiInfo</td><td><span class="pill bool">bool</span></td><td data-en="Fake Wi-Fi SSID / BSSID" data-vi="Gia mạo SSID / BSSID Wi-Fi">Fake Wi-Fi SSID / BSSID</td></tr>
+          <tr><td class="pk">overrideSysctl</td><td><span class="pill bool">bool</span></td><td data-en="Fake sysctl values (hostname, model…)" data-vi="Gia mạo sysctl (hostname, model…)">Fake sysctl values (hostname, model…)</td></tr>
+          <tr><td class="pk">overrideAdsId</td><td><span class="pill bool">bool</span></td><td data-en="Fake IDFA" data-vi="Gia mạo IDFA">Fake IDFA</td></tr>
+          <tr><td class="pk">overrideLocation</td><td><span class="pill bool">bool</span></td><td data-en="Fake GPS location" data-vi="Gia mạo vị trí GPS">Fake GPS location</td></tr>
+          <tr><td class="pk">overrideLocale</td><td><span class="pill bool">bool</span></td><td data-en="Fake language / region" data-vi="Gia mạo ngôn ngữ / khu vực">Fake language / region</td></tr>
+          <tr><td class="pk">overrideDateTime</td><td><span class="pill bool">bool</span></td><td data-en="Fake timezone (re-points the localtime symlink, guarded across reboots)" data-vi="Gia mạo múi giờ (re-point symlink localtime + TZ guard)">Fake timezone (re-points the localtime symlink, guarded across reboots)</td></tr>
+          <tr><td class="pk">overrideSensors</td><td><span class="pill bool">bool</span></td><td data-en="Fake sensors (accelerometer, gyro…)" data-vi="Gia mạo cảm biến (accelerometer, gyro…)">Fake sensors (accelerometer, gyro…)</td></tr>
+          <tr><td class="pk">overrideWebRTC</td><td><span class="pill bool">bool</span></td><td data-en="Hide real IP via WebRTC in the browser" data-vi="Che IP thật qua WebRTC trong browser">Hide real IP via WebRTC in the browser</td></tr>
+          <tr><td class="pk">blockWebRTC</td><td><span class="pill bool">bool</span></td><td data-en="Block WebRTC entirely" data-vi="Khóa hoàn toàn WebRTC">Block WebRTC entirely</td></tr>
+          <tr><td class="pk">enableForSystemApps</td><td><span class="pill bool">bool</span></td><td data-en="Also apply to system apps" data-vi="Áp dụng cho cả app hệ thống">Also apply to system apps</td></tr>
+          <tr><td class="pk">browserMode</td><td><span class="pill enum">enum</span></td><td data-en="0 off · 1 Safari only · 2 all browsers (UA + WebRTC)" data-vi="0 tắt · 1 chỉ Safari · 2 mọi browser (UA + WebRTC)">0 off · 1 Safari only · 2 all browsers (UA + WebRTC)</td></tr>
+          <tr><td class="pk">bundleId</td><td><span class="pill list">list</span></td><td data-en="App targeting list — repeat for multiple apps" data-vi="Danh sách app targeting — lặp lại cho nhiều app">App targeting list — repeat for multiple apps</td></tr>
+        </table>
+      </details>
+      <div class="ex-label" data-en="Examples" data-vi="Ví dụ">Examples</div>
+      <div class="ex-group">
+        <div class="example-row">
+          <div class="example" data-copy="persona://identity?overrideDevice=true&overrideOSVersion=true"><span class="scheme">persona://</span><span class="action">identity</span>?<span class="k">overrideDevice</span>=<span class="v">true</span>&amp;<span class="k">overrideOSVersion</span>=<span class="v">true</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+        <div class="example-row">
+          <div class="example" data-copy="persona://identity?bundleId=com.zalo.text&bundleId=com.instagram.app"><span class="scheme">persona://</span><span class="action">identity</span>?<span class="k">bundleId</span>=<span class="v">com.zalo.text</span>&amp;<span class="k">bundleId</span>=<span class="v">com.instagram.app</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+        <div class="example-row">
+          <div class="example" data-copy="persona://identity?browserMode=1&overrideWebRTC=true"><span class="scheme">persona://</span><span class="action">identity</span>?<span class="k">browserMode</span>=<span class="v">1</span>&amp;<span class="k">overrideWebRTC</span>=<span class="v">true</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GLOBAL CONFIG ============ -->
+  <section class="cat reveal" data-search="config global loopProxy reset confirmation autoClose trackingURL">
+    <div class="cat-head">
+      <div class="tile" style="background:var(--tile-blue)"><svg viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="1.8" stroke-linecap="round"><path d="M4 8h10M18 8h2M4 16h4M12 16h8"/><circle cx="16" cy="8" r="2"/><circle cx="10" cy="16" r="2"/></svg></div>
+      <div><h2>Global Config</h2><div class="cat-sub" data-en="Reset / backup / open-app behavior" data-vi="Hành vi reset / backup / mở app">Reset / backup / open-app behavior</div></div>
+    </div>
+
+    <div class="action-card" id="a-config" data-search="config cập nhật global config">
+      <div class="action-top"><span class="action-url">persona://config</span><span class="badge" data-en="23 params" data-vi="23 tham số">23 params</span></div>
+      <div class="action-desc" data-en="Update Global Config. Only send the keys you want to change — missing keys keep their current value." data-vi="Cập nhật Global Config. Chỉ truyền các key cần đổi — key không xuất hiện giữ nguyên giá trị cũ.">Update Global Config. Only send the keys you want to change — missing keys keep their current value.</div>
+      <details class="params" open>
+        <summary><svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg><span data-en="Parameters" data-vi="Tham số">Parameters</span></summary>
+        <table class="ptable">
+          <tr><th>Key</th><th>Type</th><th data-en="Description" data-vi="Mô tả">Description</th></tr>
+          <tr><td class="pk">loopProxy</td><td><span class="pill bool">bool</span></td><td data-en="Loop through the proxy list" data-vi="Vòng lặp danh sách proxy">Loop through the proxy list</td></tr>
+          <tr><td class="pk">changeProxyWhenReset</td><td><span class="pill bool">bool</span></td><td data-en="Rotate proxy on every reset" data-vi="Đổi proxy mỗi lần reset">Rotate proxy on every reset</td></tr>
+          <tr><td class="pk">clearSafari</td><td><span class="pill bool">bool</span></td><td data-en="Clear Safari data when clearing apps" data-vi="Xoá dữ liệu Safari khi clear">Clear Safari data when clearing apps</td></tr>
+          <tr><td class="pk">backupSafariWhenBackup</td><td><span class="pill bool">bool</span></td><td data-en="Include Safari in backups" data-vi="Backup Safari kèm theo">Include Safari in backups</td></tr>
+          <tr><td class="pk">backupKeychainSQLType</td><td><span class="pill bool">bool</span></td><td data-en="Full keychain backup (SQL dump) instead of selective" data-vi="Full keychain backup (SQL dump) thay vì selective">Full keychain backup (SQL dump) instead of selective</td></tr>
+          <tr><td class="pk">uninstallAppAfterWipe</td><td><span class="pill bool">bool</span></td><td data-en="Uninstall apps after wiping" data-vi="Gỡ app sau khi wipe">Uninstall apps after wiping</td></tr>
+          <tr><td class="pk">showWipeConfirmation</td><td><span class="pill bool">bool</span></td><td data-en="Ask for confirmation before wiping" data-vi="Hỏi xác nhận trước khi wipe">Ask for confirmation before wiping</td></tr>
+          <tr><td class="pk">autoCloseResultAlert</td><td><span class="pill bool">bool</span></td><td data-en="Auto-close result alerts" data-vi="Tự đóng alert kết quả">Auto-close result alerts</td></tr>
+          <tr><td class="pk">resultAlertDelay</td><td><span class="pill int">int</span></td><td data-en="Seconds before auto-closing the alert" data-vi="Giây trước khi tự đóng alert">Seconds before auto-closing the alert</td></tr>
+          <tr><td class="pk">closeAppAfterReset</td><td><span class="pill bool">bool</span></td><td data-en="Close apps after reset" data-vi="Đóng app sau reset">Close apps after reset</td></tr>
+          <tr><td class="pk">skipResetConfirmation</td><td><span class="pill bool">bool</span></td><td data-en="Skip the reset confirmation step" data-vi="Bỏ qua bước xác nhận reset">Skip the reset confirmation step</td></tr>
+          <tr><td class="pk">openAppAfterRestore</td><td><span class="pill bool">bool</span></td><td data-en="Open apps after restore" data-vi="Mở app sau restore">Open apps after restore</td></tr>
+          <tr><td class="pk">autoDownloadApp</td><td><span class="pill bool">bool</span></td><td data-en="Re-download wiped apps from the App Store" data-vi="Tự tải lại app đã wipe từ App Store">Re-download wiped apps from the App Store</td></tr>
+          <tr><td class="pk">openAppAfterDownloaded</td><td><span class="pill bool">bool</span></td><td data-en="Open apps right after download" data-vi="Mở app sau khi tải xong">Open apps right after download</td></tr>
+          <tr><td class="pk">openAppAfterResetData</td><td><span class="pill bool">bool</span></td><td data-en="Open apps after data reset" data-vi="Mở app sau reset data">Open apps after data reset</td></tr>
+          <tr><td class="pk">autoAllowAlertInApp</td><td><span class="pill bool">bool</span></td><td data-en="Auto-tap Allow on in-app alerts" data-vi="Tự bấm Allow cho alert trong app">Auto-tap Allow on in-app alerts</td></tr>
+          <tr><td class="pk">useOldDevice</td><td><span class="pill bool">bool</span></td><td data-en="Use the old device identity" data-vi="Dùng device identity cũ">Use the old device identity</td></tr>
+          <tr><td class="pk">enableDeviceSpoofing</td><td><span class="pill bool">bool</span></td><td data-en="Master switch for device spoofing" data-vi="Bật/tắt toàn bộ device spoofing">Master switch for device spoofing</td></tr>
+          <tr><td class="pk">openAppDelayMode</td><td><span class="pill enum">enum</span></td><td>none &middot; exact &middot; random</td></tr>
+          <tr><td class="pk">openAppDelayExact</td><td><span class="pill int">int</span></td><td data-en="Fixed delay in seconds before opening apps" data-vi="Giây delay cố định khi mở app">Fixed delay in seconds before opening apps</td></tr>
+          <tr><td class="pk">openAppDelayMin</td><td><span class="pill int">int</span></td><td data-en="Minimum delay (random mode)" data-vi="Delay tối thiểu (chế độ random)">Minimum delay (random mode)</td></tr>
+          <tr><td class="pk">openAppDelayMax</td><td><span class="pill int">int</span></td><td data-en="Maximum delay (random mode)" data-vi="Delay tối đa (chế độ random)">Maximum delay (random mode)</td></tr>
+          <tr><td class="pk">trackingURL</td><td><span class="pill str">string</span></td><td data-en="Third-party tracking URL" data-vi="URL tracking bên thứ ba">Third-party tracking URL</td></tr>
+        </table>
+      </details>
+      <div class="ex-label" data-en="Examples" data-vi="Ví dụ">Examples</div>
+      <div class="ex-group">
+        <div class="example-row">
+          <div class="example" data-copy="persona://config?skipResetConfirmation=true&autoCloseResultAlert=true"><span class="scheme">persona://</span><span class="action">config</span>?<span class="k">skipResetConfirmation</span>=<span class="v">true</span>&amp;<span class="k">autoCloseResultAlert</span>=<span class="v">true</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+        <div class="example-row">
+          <div class="example" data-copy="persona://config?openAppDelayMode=random&openAppDelayMin=3&openAppDelayMax=8"><span class="scheme">persona://</span><span class="action">config</span>?<span class="k">openAppDelayMode</span>=<span class="v">random</span>&amp;<span class="k">openAppDelayMin</span>=<span class="v">3</span>&amp;<span class="k">openAppDelayMax</span>=<span class="v">8</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GENERAL ============ -->
+  <section class="cat reveal" data-search="general logging socketPort webServerPort">
+    <div class="cat-head">
+      <div class="tile" style="background:var(--tile-gold)"><svg viewBox="0 0 24 24" fill="none" stroke="#D9B469" stroke-width="1.8" stroke-linecap="round"><path d="M13 2L4.5 13.5H11L10 22l8.5-11.5H12L13 2z"/></svg></div>
+      <div><h2>General</h2><div class="cat-sub" data-en="Logging &amp; service ports" data-vi="Logging &amp; cổng dịch vụ">Logging &amp; service ports</div></div>
+    </div>
+
+    <div class="action-card" id="a-general" data-search="general logging logLevel socketPort webServerPort">
+      <div class="action-top"><span class="action-url">persona://general</span><span class="badge" data-en="4 params" data-vi="4 tham số">4 params</span></div>
+      <div class="action-desc" data-en="Update General settings." data-vi="Cập nhật General settings.">Update General settings.</div>
+      <details class="params" open>
+        <summary><svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg><span data-en="Parameters" data-vi="Tham số">Parameters</span></summary>
+        <table class="ptable">
+          <tr><th>Key</th><th>Type</th><th data-en="Description" data-vi="Mô tả">Description</th></tr>
+          <tr><td class="pk">enableLogging</td><td><span class="pill bool">bool</span></td><td data-en="Enable file logging to /var/jb/var/log/persona.log" data-vi="Bật logging ra /var/jb/var/log/persona.log">Enable file logging to /var/jb/var/log/persona.log</td></tr>
+          <tr><td class="pk">logLevel</td><td><span class="pill enum">enum</span></td><td>Error &middot; Warning &middot; Info &middot; Debug</td></tr>
+          <tr><td class="pk">socketPort</td><td><span class="pill int">int</span></td><td data-en="IPC socket port" data-vi="Cổng socket IPC">IPC socket port</td></tr>
+          <tr><td class="pk">webServerPort</td><td><span class="pill int">int</span></td><td data-en="Web server port" data-vi="Cổng web server">Web server port</td></tr>
+        </table>
+      </details>
+      <div class="ex-label" data-en="Examples" data-vi="Ví dụ">Examples</div>
+      <div class="ex-group">
+        <div class="example-row">
+          <div class="example" data-copy="persona://general?enableLogging=true&logLevel=Debug"><span class="scheme">persona://</span><span class="action">general</span>?<span class="k">enableLogging</span>=<span class="v">true</span>&amp;<span class="k">logLevel</span>=<span class="v">Debug</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROXY SETTINGS ============ -->
+  <section class="cat reveal" data-search="proxy settings autoRotate healthCheck dns perApp connectionMode preferredProtocol includeApp excludeApp">
+    <div class="cat-head">
+      <div class="tile" style="background:var(--tile-blue)"><svg viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/><circle cx="12" cy="12" r="4"/></svg></div>
+      <div><h2>Proxy Settings</h2><div class="cat-sub" data-en="Relay / rotation / per-app configuration" data-vi="Cấu hình relay / xoay vòng / per-app">Relay / rotation / per-app configuration</div></div>
+    </div>
+
+    <div class="action-card" id="a-proxy" data-search="proxy settings cập nhật cấu hình proxy">
+      <div class="action-top"><span class="action-url">persona://proxy</span><span class="badge" data-en="22 params" data-vi="22 tham số">22 params</span></div>
+      <div class="action-desc" data-en="Update Proxy settings. Only send the keys you want to change." data-vi="Cập nhật Proxy settings. Chỉ truyền các key cần đổi.">Update Proxy settings. Only send the keys you want to change.</div>
+      <details class="params" open>
+        <summary><svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg><span data-en="Parameters" data-vi="Tham số">Parameters</span></summary>
+        <table class="ptable">
+          <tr><th>Key</th><th>Type</th><th data-en="Description" data-vi="Mô tả">Description</th></tr>
+          <tr><td class="pk">autoReconnect</td><td><span class="pill bool">bool</span></td><td data-en="Reconnect automatically when the proxy dies" data-vi="Tự reconnect khi proxy chết">Reconnect automatically when the proxy dies</td></tr>
+          <tr><td class="pk">healthCheckEnabled</td><td><span class="pill bool">bool</span></td><td data-en="Enable health checks" data-vi="Bật health check">Enable health checks</td></tr>
+          <tr><td class="pk">dnsOverProxy</td><td><span class="pill bool">bool</span></td><td data-en="Route DNS through the proxy (anti-leak)" data-vi="Đi DNS qua proxy (chống DNS leak)">Route DNS through the proxy (anti-leak)</td></tr>
+          <tr><td class="pk">customDNSEnabled</td><td><span class="pill bool">bool</span></td><td data-en="Use a custom DNS server" data-vi="Dùng DNS server tùy chỉnh">Use a custom DNS server</td></tr>
+          <tr><td class="pk">customDNSServer</td><td><span class="pill str">string</span></td><td data-en="DNS address, e.g. 1.1.1.1" data-vi="Địa chỉ DNS, vd 1.1.1.1">DNS address, e.g. 1.1.1.1</td></tr>
+          <tr><td class="pk">autoRotateEnabled</td><td><span class="pill bool">bool</span></td><td data-en="Rotate proxies on a schedule" data-vi="Tự xoay proxy định kỳ">Rotate proxies on a schedule</td></tr>
+          <tr><td class="pk">rotateInterval</td><td><span class="pill int">int</span></td><td data-en="Seconds between rotations" data-vi="Giây giữa hai lần xoay">Seconds between rotations</td></tr>
+          <tr><td class="pk">rotateOnFailure</td><td><span class="pill bool">bool</span></td><td data-en="Rotate when a request fails" data-vi="Xoay khi request thất bại">Rotate when a request fails</td></tr>
+          <tr><td class="pk">rotateRandomly</td><td><span class="pill bool">bool</span></td><td data-en="Pick proxies randomly instead of in order" data-vi="Chọn proxy ngẫu nhiên thay vì tuần tự">Pick proxies randomly instead of in order</td></tr>
+          <tr><td class="pk">fallbackEnabled</td><td><span class="pill bool">bool</span></td><td data-en="Use the fallback proxy when the list is exhausted" data-vi="Dùng fallback proxy khi hết list">Use the fallback proxy when the list is exhausted</td></tr>
+          <tr><td class="pk">fallbackProxyId</td><td><span class="pill str">string</span></td><td data-en="ID of the fallback proxy" data-vi="ID của proxy fallback">ID of the fallback proxy</td></tr>
+          <tr><td class="pk">directOnAllFail</td><td><span class="pill bool">bool</span></td><td data-en="Go direct when every proxy fails" data-vi="Đi mạng trực tiếp khi mọi proxy đều fail">Go direct when every proxy fails</td></tr>
+          <tr><td class="pk">perAppProxyEnabled</td><td><span class="pill bool">bool</span></td><td data-en="Per-app proxy (only listed apps use the proxy)" data-vi="Bật per-app proxy (chỉ app trong list đi proxy)">Per-app proxy (only listed apps use the proxy)</td></tr>
+          <tr><td class="pk">excludeAppsEnabled</td><td><span class="pill bool">bool</span></td><td data-en="Enable the exclusion list" data-vi="Bật danh sách loại trừ">Enable the exclusion list</td></tr>
+          <tr><td class="pk">verboseLogging</td><td><span class="pill bool">bool</span></td><td data-en="Verbose proxy logging" data-vi="Log chi tiết proxy">Verbose proxy logging</td></tr>
+          <tr><td class="pk">connectionTimeout</td><td><span class="pill int">int</span></td><td data-en="Connection timeout (seconds)" data-vi="Timeout kết nối (giây)">Connection timeout (seconds)</td></tr>
+          <tr><td class="pk">healthCheckInterval</td><td><span class="pill int">int</span></td><td data-en="Seconds between health checks" data-vi="Giây giữa hai lần health check">Seconds between health checks</td></tr>
+          <tr><td class="pk">localPort</td><td><span class="pill int">int</span></td><td data-en="Local relay port (127.0.0.1)" data-vi="Cổng relay local (127.0.0.1)">Local relay port (127.0.0.1)</td></tr>
+          <tr><td class="pk">connectionMode</td><td><span class="pill enum">enum</span></td><td data-en="relay (through PersonaProxy) · direct (set upstream directly)" data-vi="relay (qua PersonaProxy) · direct (set thẳng upstream)">relay (through PersonaProxy) · direct (set upstream directly)</td></tr>
+          <tr><td class="pk">preferredProtocol</td><td><span class="pill enum">enum</span></td><td>SOCKS5 &middot; SOCKS4 &middot; HTTP &middot; HTTPS</td></tr>
+          <tr><td class="pk">includeApp</td><td><span class="pill list">list</span></td><td data-en="Bundle IDs that use the proxy — repeat for multiple apps" data-vi="Bundle ID được proxy — lặp lại cho nhiều app">Bundle IDs that use the proxy — repeat for multiple apps</td></tr>
+          <tr><td class="pk">excludeApp</td><td><span class="pill list">list</span></td><td data-en="Bundle IDs excluded from the proxy — repeat for multiple apps" data-vi="Bundle ID bị loại trừ — lặp lại cho nhiều app">Bundle IDs excluded from the proxy — repeat for multiple apps</td></tr>
+        </table>
+      </details>
+      <div class="ex-label" data-en="Examples" data-vi="Ví dụ">Examples</div>
+      <div class="ex-group">
+        <div class="example-row">
+          <div class="example" data-copy="persona://proxy?autoRotateEnabled=true&rotateInterval=300"><span class="scheme">persona://</span><span class="action">proxy</span>?<span class="k">autoRotateEnabled</span>=<span class="v">true</span>&amp;<span class="k">rotateInterval</span>=<span class="v">300</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+        <div class="example-row">
+          <div class="example" data-copy="persona://proxy?perAppProxyEnabled=true&includeApp=com.zalo.text&excludeApp=com.apple.Music"><span class="scheme">persona://</span><span class="action">proxy</span>?<span class="k">perAppProxyEnabled</span>=<span class="v">true</span>&amp;<span class="k">includeApp</span>=<span class="v">com.zalo.text</span>&amp;<span class="k">excludeApp</span>=<span class="v">com.apple.Music</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+        <div class="example-row">
+          <div class="example" data-copy="persona://proxy?customDNSEnabled=true&customDNSServer=1.1.1.1&dnsOverProxy=true"><span class="scheme">persona://</span><span class="action">proxy</span>?<span class="k">customDNSEnabled</span>=<span class="v">true</span>&amp;<span class="k">customDNSServer</span>=<span class="v">1.1.1.1</span>&amp;<span class="k">dnsOverProxy</span>=<span class="v">true</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RRS SETTINGS ============ -->
+  <section class="cat reveal" data-search="rrs backupPath maxBackups queue confirmation">
+    <div class="cat-head">
+      <div class="tile" style="background:var(--tile-green)"><svg viewBox="0 0 24 24" fill="none" stroke="#4ADE80" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5.5" rx="7" ry="2.5"/><path d="M5 5.5v6c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-6"/><path d="M5 11.5v6c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-6"/></svg></div>
+      <div><h2>RRS Settings</h2><div class="cat-sub" data-en="Backup queue, limits &amp; paths" data-vi="Backup queue, giới hạn &amp; đường dẫn">Backup queue, limits &amp; paths</div></div>
+    </div>
+
+    <div class="action-card" id="a-rrs" data-search="rrs cập nhật rrs settings backup path">
+      <div class="action-top"><span class="action-url">persona://rrs</span><span class="badge" data-en="8 params" data-vi="8 tham số">8 params</span></div>
+      <div class="action-desc" data-en="Update RRS (backup/restore) settings." data-vi="Cập nhật RRS (backup/restore) settings.">Update RRS (backup/restore) settings.</div>
+      <details class="params" open>
+        <summary><svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg><span data-en="Parameters" data-vi="Tham số">Parameters</span></summary>
+        <table class="ptable">
+          <tr><th>Key</th><th>Type</th><th data-en="Description" data-vi="Mô tả">Description</th></tr>
+          <tr><td class="pk">excludePathsEnabled</td><td><span class="pill bool">bool</span></td><td data-en="Enable the excluded-paths list" data-vi="Bật danh sách đường dẫn loại trừ">Enable the excluded-paths list</td></tr>
+          <tr><td class="pk">skipBackupConfirmation</td><td><span class="pill bool">bool</span></td><td data-en="Skip confirmation before backup" data-vi="Bỏ qua xác nhận trước backup">Skip confirmation before backup</td></tr>
+          <tr><td class="pk">skipRestoreConfirmation</td><td><span class="pill bool">bool</span></td><td data-en="Skip confirmation before restore" data-vi="Bỏ qua xác nhận trước restore">Skip confirmation before restore</td></tr>
+          <tr><td class="pk">autoCreateDefaultQueue</td><td><span class="pill bool">bool</span></td><td data-en="Auto-create the default queue" data-vi="Tự tạo queue mặc định">Auto-create the default queue</td></tr>
+          <tr><td class="pk">maxBackups</td><td><span class="pill int">int</span></td><td data-en="Maximum number of backups kept" data-vi="Số backup tối đa được giữ">Maximum number of backups kept</td></tr>
+          <tr><td class="pk">storageAlertThresholdMB</td><td><span class="pill int">int</span></td><td data-en="Storage warning threshold (MB)" data-vi="Ngưỡng cảnh báo dung lượng (MB)">Storage warning threshold (MB)</td></tr>
+          <tr><td class="pk">backupPath</td><td><span class="pill str">string</span></td><td data-en="Backup folder, default /var/mobile/Persona/RRS" data-vi="Thư mục lưu backup, mặc định /var/mobile/Persona/RRS">Backup folder, default /var/mobile/Persona/RRS</td></tr>
+          <tr><td class="pk">defaultComment</td><td><span class="pill str">string</span></td><td data-en="Default comment for new backups" data-vi="Chú thích mặc định cho backup mới">Default comment for new backups</td></tr>
+        </table>
+      </details>
+      <div class="ex-label" data-en="Examples" data-vi="Ví dụ">Examples</div>
+      <div class="ex-group">
+        <div class="example-row">
+          <div class="example" data-copy="persona://rrs?maxBackups=20&skipBackupConfirmation=true"><span class="scheme">persona://</span><span class="action">rrs</span>?<span class="k">maxBackups</span>=<span class="v">20</span>&amp;<span class="k">skipBackupConfirmation</span>=<span class="v">true</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+        <div class="example-row">
+          <div class="example" data-copy="persona://rrs?backupPath=/var/mobile/Persona/RRS&defaultComment=auto"><span class="scheme">persona://</span><span class="action">rrs</span>?<span class="k">backupPath</span>=<span class="v">/var/mobile/Persona/RRS</span>&amp;<span class="k">defaultComment</span>=<span class="v">auto</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ UTILITY ============ -->
+  <section class="cat reveal" data-search="open-settings mở settings pane apple id">
+    <div class="cat-head">
+      <div class="tile" style="background:var(--tile-violet)"><svg viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1-1.55 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.7 1.7 0 0 0 .34-1.87 1.7 1.7 0 0 0-1.55-1H3a2 2 0 1 1 0-4h.09a1.7 1.7 0 0 0 1.55-1 1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34h.09a1.7 1.7 0 0 0 1-1.55V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87v.09a1.7 1.7 0 0 0 1.55 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.55 1z"/></svg></div>
+      <div><h2>Utility</h2><div class="cat-sub" data-en="Navigation helpers" data-vi="Hỗ trợ điều hướng">Navigation helpers</div></div>
+    </div>
+
+    <div class="action-card" id="a-open-settings" data-search="open-settings mở settings app-prefs pane">
+      <div class="action-top"><span class="action-url">persona://open-settings</span><span class="badge" data-en="2 params" data-vi="2 tham số">2 params</span></div>
+      <div class="action-desc" data-en="Open the Settings app via the App-Prefs: scheme. Use pane to jump straight to a screen, or url for an arbitrary settings URL." data-vi="Mở app Settings qua scheme App-Prefs:. Dùng pane để mở thẳng một màn hình, hoặc url cho URL tùy ý.">Open the Settings app via the App-Prefs: scheme. Use pane to jump straight to a screen, or url for an arbitrary settings URL.</div>
+      <details class="params" open>
+        <summary><svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg><span data-en="Parameters" data-vi="Tham số">Parameters</span></summary>
+        <table class="ptable">
+          <tr><th>Key</th><th>Type</th><th data-en="Description" data-vi="Mô tả">Description</th></tr>
+          <tr><td class="pk">pane</td><td><span class="pill str">string</span></td><td data-en="Settings path, e.g. root=APPLE_ID (encode = as %3D)" data-vi="Path trong Settings, vd root=APPLE_ID (encode dấu = thành %3D)">Settings path, e.g. root=APPLE_ID (encode = as %3D)</td></tr>
+          <tr><td class="pk">url</td><td><span class="pill str">string</span></td><td data-en="Open a specific URL instead of a pane" data-vi="Mở URL cụ thể thay vì pane">Open a specific URL instead of a pane</td></tr>
+        </table>
+      </details>
+      <div class="ex-label" data-en="Examples" data-vi="Ví dụ">Examples</div>
+      <div class="ex-group">
+        <div class="example-row">
+          <div class="example" data-copy="persona://open-settings?pane=root%3DAPPLE_ID"><span class="scheme">persona://</span><span class="action">open-settings</span>?<span class="k">pane</span>=<span class="v">root%3DAPPLE_ID</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+        <div class="example-row">
+          <div class="example" data-copy="persona://open-settings?url=App-Prefs%3A%2F%2Froot%3DWIFI"><span class="scheme">persona://</span><span class="action">open-settings</span>?<span class="k">url</span>=<span class="v">App-Prefs%3A%2F%2Froot%3DWIFI</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TRIGGERS ============ -->
+  <section class="cat reveal" data-search="shortcuts safari devicectl terminal cách gọi trigger">
+    <div class="cat-head">
+      <div class="tile" style="background:var(--tile-gold)"><svg viewBox="0 0 24 24" fill="none" stroke="#D9B469" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/><path d="M12 8v8M9 12h6"/></svg></div>
+      <div><h2 data-en="How to Trigger" data-vi="Cách Trigger">How to Trigger</h2><div class="cat-sub">Shortcuts &middot; Safari &middot; Terminal (Mac)</div></div>
+    </div>
+
+    <div class="trigger-grid">
+      <div class="trigger">
+        <b>iOS Shortcuts</b>
+        <span data-en="Create a shortcut → add an Open URL action → paste the command." data-vi="Tạo shortcut mới → thêm action Open URL → dán lệnh.">Create a shortcut → add an Open URL action → paste the command.</span>
+<pre><span class="hl">persona://</span>proxy-enable</pre>
+      </div>
+      <div class="trigger">
+        <b data-en="Safari (on device)" data-vi="Safari (trên device)">Safari (on device)</b>
+        <span data-en="Type the command directly into the address bar — the app opens and handles it." data-vi="Gõ trực tiếp vào thanh địa chỉ — app sẽ mở và xử lý.">Type the command directly into the address bar — the app opens and handles it.</span>
+<pre><span class="hl">persona://</span>rotate-proxy?save=false</pre>
+      </div>
+      <div class="trigger">
+        <b data-en="Terminal (Mac, devicectl)" data-vi="Terminal (Mac, devicectl)">Terminal (Mac, devicectl)</b>
+        <span data-en="Cold launch with a payload — kill the old process first, devicectl does not restart a running app." data-vi="Cold launch kèm payload — kill app cũ trước vì devicectl không restart process đang chạy.">Cold launch with a payload — kill the old process first, devicectl does not restart a running app.</span>
+<pre>xcrun devicectl device process launch \
+  --device &lt;UDID&gt; \
+  --payload-url "<span class="hl">persona://</span>backup?name=Test" \
+  com.0x17.persona</pre>
+      </div>
+    </div>
+  </section>
+
+  <footer class="reveal">
+    <div class="fmark">Per<span>sona</span></div>
+    <span data-en="URL Scheme Documentation · persona:// · com.0x17.persona" data-vi="Tài liệu URL Scheme · persona:// · com.0x17.persona">URL Scheme Documentation · persona:// · com.0x17.persona</span>
+  </footer>
+
+</div>
+
+<script>
+function setLang(l){
+  try { localStorage.setItem('persona-lang', l); } catch(e){}
+  document.querySelectorAll('[data-en]').forEach(function(el){
+    el.textContent = (l === 'vi' && el.dataset.vi) ? el.dataset.vi : el.dataset.en;
+  });
+  var fi = document.getElementById('filter');
+  if (fi) fi.placeholder = (l === 'vi') ? 'Lọc lệnh… (vd: proxy, backup, login)' : 'Filter commands… (e.g. proxy, backup, login)';
+  document.querySelectorAll('.lang-btn').forEach(function(b){
+    b.classList.toggle('active', b.dataset.lang === l);
+  });
+  document.documentElement.lang = (l === 'vi') ? 'vi' : 'en';
+  updateCount();
+}
+
+var io = new IntersectionObserver((entries) => {
+  for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach((el, i) => {
+  el.style.transitionDelay = Math.min(i * 60, 300) + 'ms';
+  io.observe(el);
+});
+
+const filter = document.getElementById('filter');
+const countEl = document.getElementById('count');
+function updateCount(){
+  const visible = [...document.querySelectorAll('.action-card')].filter(c => c.style.display !== 'none').length;
+  countEl.textContent = visible + (document.documentElement.lang === 'vi' ? ' lệnh' : ' actions');
+}
+function applyFilter() {
+  const q = filter.value.trim().toLowerCase();
+  document.querySelectorAll('.action-card').forEach(card => {
+    const hay = (card.dataset.search || '') + ' ' + card.textContent.toLowerCase();
+    const show = !q || hay.includes(q);
+    card.style.display = show ? '' : 'none';
+  });
+  document.querySelectorAll('section.cat').forEach(sec => {
+    const any = [...sec.querySelectorAll('.action-card')].some(c => c.style.display !== 'none');
+    sec.style.display = any ? '' : 'none';
+  });
+  updateCount();
+}
+filter.addEventListener('input', applyFilter);
+applyFilter();
+
+document.querySelectorAll('.copy-btn').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const target = btn.parentElement.querySelector('[data-copy]');
+    if (!target) return;
+    const text = target.dataset.copy;
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch (e) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      ta.remove();
+    }
+    btn.classList.add('copied');
+    btn.querySelector('span').textContent = document.documentElement.lang === 'vi' ? 'Đã chép ✓' : 'Copied ✓';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      setLang(document.documentElement.lang);
+    }, 1600);
+  });
+});
+
+(function(){
+  var saved = 'en';
+  try { saved = localStorage.getItem('persona-lang') || 'en'; } catch(e){}
+  if (saved !== 'en') setLang(saved);
+})();
+</script>
+
+</body>
+</html>
