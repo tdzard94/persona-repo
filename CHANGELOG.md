@@ -4,6 +4,24 @@ Published Sileo builds (`com.0x17.persona.rootless` / `.roothide`). Newest first
 
 ## [Unreleased]
 
+## [2.3.0] - 2026-09-24
+
+### Added
+- "Uninstall Apps after Reset" toggle in Global Config (default off) — when on, reset ends with a final step that uninstalls the targeted apps
+- App Targeting: "Not Installed" section listing selected apps that were removed from the device — tap to unselect them (they were invisible before and stayed ticked forever)
+- Live step progress in loading alerts ("Step X/Y — label") for reset / backup-and-reset / backup; failure alerts now name the exact step that failed
+- RRS backup/restore run as an explicit overall step plan with progress (backup: 7 steps incl. ZIP integrity verification; restore: 8 steps incl. service restart)
+
+### Changed
+- RRS list filters "Restored" / "Not restored" now mean restored today / not restored today; selection toolbar simplified (per-row restore & re-backup removed from toolbar)
+- Device quick-select defaults are iPhone-only now (iPads excluded)
+
+### Fixed
+- Full-dump keychain restore was broken — a SQL dump (CREATE TABLE + INSERTs) can never be applied to the live DB. Restore now builds a fresh DB from the dump and swaps it in after restarting `securityd` (live DB kept as `.bak-persona`)
+- Wipe of uninstalled targeted apps: orphaned App Group containers + app bundles are now found via container metadata / Info.plist scans and deleted (SpringBoard usually removes data containers itself, but groups and bundles could survive)
+- Stacked alerts on back-to-back operations — result alerts no longer pile up 2–3 deep; the previous alert is dismissed before the next one presents
+- RRS selection state going stale after filtering (filtered list is now computed live instead of a stored copy)
+
 ## [2.2.0] - 2026-09-23
 
 ### Added
