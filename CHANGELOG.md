@@ -2,6 +2,11 @@
 
 Published Sileo builds (`com.0x17.persona.rootless` / `.roothide`). Newest first.
 
+## [2.6.1] - 2026-11-05
+
+### Fixed
+- IDFA never changed on Reset / Backup & Reset / Switch Identity: the app sent the current IDFA to the device-generate API, which echoed it back unchanged. The old IDFA is no longer sent, so every device change now gets a fresh IDFA (idfv/uuid already rotated)
+
 ## [2.6.0] - 2026-11-05
 
 ### Added
