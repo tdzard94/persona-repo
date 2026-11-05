@@ -2,23 +2,27 @@
 
 Published Sileo builds (`com.0x17.persona.rootless` / `.roothide`). Newest first.
 
-## [2.4.0] - 2026-10-04
+## [2.6.0] - 2026-11-05
 
-### Removed
-- **Fake System — the whole subsystem.** Gone: the "DANGEROUS / Override System" section in Identity Settings, the Home "System Device" card row, the More-screen "App Store → Fake Device ID" row, the reset step "Overriding system identity", `system_device.json`, and `SystemDeviceManager`. Identity faking in user apps (model, serial shown to apps, sysctl, IDFA, location, locale, timezone, sensors, browser UA, WebRTC) is untouched.
-- **The daemon identity hooks.** `PersonaSystem.dylib` no longer hooks `akd`, `appstored`, `storekitd`, `accountsd`, `amsaccountsd`, `timed`, `nsurlsessiond`, `SpringBoard`-identity, etc. — its injection filter is now `com.apple.SpringBoard` + `com.apple.Preferences` only. Those daemons answer with the real serial / UDID / ECID / Wi-Fi MAC / Bluetooth MAC. The App Store login row, App Store sign-in and AuthKit 2FA hooks in Preferences are unchanged, and App Store downloads work with the real UDID natively (no purchase window needed).
-- **The `timed` timezone hooks** (dormant on iOS 26). The timezone override is unchanged: re-pointing `/private/var/db/timezone/localtime`, guarded by the Helper's `PersonaTZGuard`.
-- **The `com.apple.*` injection gate.** The list is now exactly *ticked user apps + Safari*; nothing injects a system process any more.
+### Added
+- RRS backups can be renamed (tap a backup → Rename): updates the zip file name, the root folder inside the zip (via `zipnote`, no recompression), `metadata.json`, the database row and the Restore Queue — works on a temp copy and only swaps it in once verified
+
+### Fixed
+- IDFA spoofing had no effect in most apps: ad SDKs check App Tracking Transparency first and never read the IDFA when tracking is not authorized. With Fake IDFA on, `ATTrackingManager.trackingAuthorizationStatus` / `requestTrackingAuthorization` now report "authorized" (no system prompt) and `isAdvertisingTrackingEnabled` returns YES
+- Crash when tapping Rotate Proxy in More (also on timed / `persona://rotate-proxy` rotation): the "proxy rotated" notification was posted from a background thread and rebuilt the UI off-main
+- Global Config: the keyboard covered the tracking URL field — the list now scrolls the field above the keyboard; Done or a swipe dismisses it
+
+## [2.5.0] - 2026-10-28
 
 ### Changed
-- On launch the app deletes a leftover `system_device.json` **and reloads the daemons that kept the old hooks in RAM** (`killall -9 akd appstored storekitd accountsd amsaccountsd timed`) — deleting the file alone does not un-fake a running daemon. Runs every launch, so a device that upgrades while frozen recovers on next boot.
-- The device-details screen is kept (it shows the identity's model/version); only the Home row that opened it is gone.
 - Backup names: no spaces, app name + compact timestamp (`Tinder_20260924_211532`, multi-app joined with `+`); manual names are sanitized too; same-name collisions get a `-2`/`-3` suffix
-- Production writes nothing to `/var/tmp`: injection markers, the storekitd AMS class probe, the SpringBoard markers/kill log and the LaunchServices API dumps are gated on a sentinel — `touch /var/jb/etc/persona-diag` turns them back on for debugging, no rebuild needed
+- Production writes nothing to `/var/tmp`: injection markers, the MobileGestalt self-verify (`dlopen` + `MGCopyAnswer` in the daemon ctor), the storekitd AMS class probe, the SpringBoard markers/kill log and the LaunchServices API dumps are gated on a sentinel — `touch /var/jb/etc/persona-diag` turns them back on for debugging, no rebuild needed
 
 ### Fixed
 - Quick back-to-back backups colliding on the same timestamp name and failing to create a new file
-- Toggling a setting by tapping the ROW (not the switch) flipped the switch visually but never saved: 8 rows in Global Config now persist on row taps too.
+- App Store downloads silently failing with Override-System UDID on: the purchase window (real UDID for `appstored`/`storekitd` during a purchase, real `guid=` on `buyProduct`) had been disabled, so the store backend answered HTTP 500 again
+- Upgrading from a 2.3.0 install silently killed Override System: the old `system_device.json` (encrypted `info` blob, no udid/ecid/MACs) failed to decode, so toggles answered "No system data to update", the reset flow dropped its system step and the tweak served nothing. Fields are now optional and a legacy file is completed locally on first launch.
+- Toggling a setting by tapping the ROW (not the switch) flipped the switch visually but never saved: 8 rows in Global Config and the App Store "Fake Device ID" row now persist on row taps too.
 
 ### Security
 - Helper daemon socket is root-only (`0600` + `getpeereid()` gate): before, any app on the device could connect to `/var/run/persona-helper.sock` and drive the root daemon — wipe every app's keychain, clear SQL rows, sign the store account out
