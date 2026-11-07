@@ -288,6 +288,7 @@ footer .fmark span{color:var(--accent)}
       <a href="#a-rotate-proxy">persona://rotate-proxy</a>
       <a href="#a-reset-data">persona://reset-data</a>
       <a href="#a-backup-reset">persona://backup-reset</a>
+      <a href="#a-device-selection">persona://device-selection</a>
       <a href="#a-backup">persona://backup</a>
       <a href="#a-restore">persona://restore</a>
       <a href="#a-login-itunes">persona://login-itunes</a>
@@ -367,7 +368,7 @@ footer .fmark span{color:var(--accent)}
   </section>
 
   <!-- ============ DATA MANAGEMENT ============ -->
-  <section class="cat reveal" data-search="reset-data backup-reset reset xoá dữ liệu app bundleId hardware firmware region">
+  <section class="cat reveal" data-search="reset-data backup-reset device-selection reset xoá dữ liệu app bundleId hardware firmware region chọn máy">
     <div class="cat-head">
       <div class="tile" style="background:var(--tile-red)"><svg viewBox="0 0 24 24" fill="none" stroke="#F87171" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M10 11v6M14 11v6"/></svg></div>
       <div><h2>Data Management</h2><div class="cat-sub" data-en="Reset / backup + reset app data" data-vi="Reset / backup + reset dữ liệu app">Reset / backup + reset app data</div></div>
@@ -428,6 +429,30 @@ footer .fmark span{color:var(--accent)}
         </div>
         <div class="example-row">
           <div class="example" data-copy="persona://backup-reset?name=Weekly&bundleId=com.zalo.text&hardware=iPhone14%20Pro"><span class="scheme">persona://</span><span class="action">backup-reset</span>?<span class="k">name</span>=<span class="v">Weekly</span>&amp;<span class="k">bundleId</span>=<span class="v">com.zalo.text</span>&amp;<span class="k">hardware</span>=<span class="v">iPhone14%20Pro</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-card" id="a-device-selection" data-search="device-selection chọn máy và ios device pool hardware firmware quick select">
+      <div class="action-top"><span class="action-url">persona://device-selection</span><span class="badge" data-en="2 params" data-vi="2 tham số">2 params</span></div>
+      <div class="action-desc" data-en="Replace the devices and iOS versions that reset picks from (the Device Selection screens). Names are looked up in the server's device catalog, so it needs a login and a network. A key left out keeps its picks; a name the catalog does not know changes nothing; an iOS version that no picked device runs is left out, as Quick Select does. Persona 2.7.0+." data-vi="Thay danh sách máy và bản iOS mà reset chọn ngẫu nhiên (các màn Device Selection). Tên được tra trong danh mục thiết bị của server nên cần đăng nhập và có mạng. Key bỏ trống giữ nguyên lựa chọn; tên không có trong danh mục thì không đổi gì; bản iOS không máy nào đã chọn chạy được thì bị bỏ ra, như Quick Select. Persona 2.7.0+.">Replace the devices and iOS versions that reset picks from (the Device Selection screens). Names are looked up in the server's device catalog, so it needs a login and a network. A key left out keeps its picks; a name the catalog does not know changes nothing; an iOS version that no picked device runs is left out, as Quick Select does. Persona 2.7.0+.</div>
+      <details class="params" open>
+        <summary><svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg><span data-en="Parameters" data-vi="Tham số">Parameters</span></summary>
+        <table class="ptable">
+          <tr><th>Key</th><th>Type</th><th data-en="Description" data-vi="Mô tả">Description</th></tr>
+          <tr><td class="pk">hardware</td><td><span class="pill list">list</span></td><td data-en="Device model (iPhone 14 Pro, every variant of it) or identifier (iPhone15,2) — repeat for several; replaces the picked devices" data-vi="Model (iPhone 14 Pro, mọi biến thể) hoặc identifier (iPhone15,2) — lặp lại cho nhiều máy; thay các máy đang chọn">Device model (iPhone 14 Pro, every variant of it) or identifier (iPhone15,2) — repeat for several; replaces the picked devices</td></tr>
+          <tr><td class="pk">firmware</td><td><span class="pill list">list</span></td><td data-en="iOS version, e.g. 17.4.1 — repeat for several; replaces the picked versions" data-vi="Phiên bản iOS, vd 17.4.1 — lặp lại cho nhiều bản; thay các bản iOS đang chọn">iOS version, e.g. 17.4.1 — repeat for several; replaces the picked versions</td></tr>
+        </table>
+      </details>
+      <div class="ex-label" data-en="Examples" data-vi="Ví dụ">Examples</div>
+      <div class="ex-group">
+        <div class="example-row">
+          <div class="example" data-copy="persona://device-selection?hardware=iPhone%2014%20Pro&hardware=iPhone16,1"><span class="scheme">persona://</span><span class="action">device-selection</span>?<span class="k">hardware</span>=<span class="v">iPhone%2014%20Pro</span>&amp;<span class="k">hardware</span>=<span class="v">iPhone16,1</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+        <div class="example-row">
+          <div class="example" data-copy="persona://device-selection?firmware=17.4.1&firmware=18.1"><span class="scheme">persona://</span><span class="action">device-selection</span>?<span class="k">firmware</span>=<span class="v">17.4.1</span>&amp;<span class="k">firmware</span>=<span class="v">18.1</span></div>
           <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
         </div>
       </div>
@@ -547,8 +572,8 @@ footer .fmark span{color:var(--accent)}
       <div><h2>Identity</h2><div class="cat-sub" data-en="Overrides + app targeting — saving re-applies injection list &amp; timezone" data-vi="Overrides + app targeting — lưu xong tự re-apply injection list &amp; múi giờ">Overrides + app targeting — saving re-applies injection list &amp; timezone</div></div>
     </div>
 
-    <div class="action-card" id="a-identity" data-search="identity cập nhật identity overrides targeting">
-      <div class="action-top"><span class="action-url">persona://identity</span><span class="badge" data-en="19 params" data-vi="19 tham số">19 params</span></div>
+    <div class="action-card" id="a-identity" data-search="identity cập nhật identity overrides targeting override system serial udid mac">
+      <div class="action-top"><span class="action-url">persona://identity</span><span class="badge" data-en="20 params" data-vi="20 tham số">20 params</span></div>
       <div class="action-desc" data-en="Update identity overrides and the app targeting list. Ticked apps = targeted apps (used by injection and backup/reset/wipe/clear alike)." data-vi="Cập nhật các identity override và danh sách app targeting. App đã tick = app bị target (dùng chung cho injection lẫn backup/reset/wipe/clear).">Update identity overrides and the app targeting list. Ticked apps = targeted apps (used by injection and backup/reset/wipe/clear alike).</div>
       <details class="params" open>
         <summary><svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg><span data-en="Parameters" data-vi="Tham số">Parameters</span></summary>
@@ -563,6 +588,7 @@ footer .fmark span{color:var(--accent)}
           <tr><td class="pk">overrideNetwork</td><td><span class="pill bool">bool</span></td><td data-en="Fake network / carrier info" data-vi="Gia mạo thông tin mạng / carrier">Fake network / carrier info</td></tr>
           <tr><td class="pk">overrideWifiInfo</td><td><span class="pill bool">bool</span></td><td data-en="Fake Wi-Fi SSID / BSSID" data-vi="Gia mạo SSID / BSSID Wi-Fi">Fake Wi-Fi SSID / BSSID</td></tr>
           <tr><td class="pk">overrideSysctl</td><td><span class="pill bool">bool</span></td><td data-en="Fake sysctl values (hostname, model…)" data-vi="Gia mạo sysctl (hostname, model…)">Fake sysctl values (hostname, model…)</td></tr>
+          <tr><td class="pk">overrideSystem</td><td><span class="pill bool">bool</span></td><td data-en="Override System: fake serial / UDID / MAC, as the Identity screen's switch does but without its confirmation; turning it on with no system identity saved makes one. Persona 2.7.0+" data-vi="Override System: gia mạo serial / UDID / MAC, như công tắc trên màn Identity nhưng không hỏi xác nhận; bật khi chưa có system identity thì tự tạo. Persona 2.7.0+">Override System: fake serial / UDID / MAC, as the Identity screen's switch does but without its confirmation; turning it on with no system identity saved makes one. Persona 2.7.0+</td></tr>
           <tr><td class="pk">overrideAdsId</td><td><span class="pill bool">bool</span></td><td data-en="Fake IDFA" data-vi="Gia mạo IDFA">Fake IDFA</td></tr>
           <tr><td class="pk">overrideLocation</td><td><span class="pill bool">bool</span></td><td data-en="Fake GPS location" data-vi="Gia mạo vị trí GPS">Fake GPS location</td></tr>
           <tr><td class="pk">overrideLocale</td><td><span class="pill bool">bool</span></td><td data-en="Fake language / region" data-vi="Gia mạo ngôn ngữ / khu vực">Fake language / region</td></tr>
@@ -587,6 +613,10 @@ footer .fmark span{color:var(--accent)}
         </div>
         <div class="example-row">
           <div class="example" data-copy="persona://identity?browserMode=1&overrideWebRTC=true"><span class="scheme">persona://</span><span class="action">identity</span>?<span class="k">browserMode</span>=<span class="v">1</span>&amp;<span class="k">overrideWebRTC</span>=<span class="v">true</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+        <div class="example-row">
+          <div class="example" data-copy="persona://identity?overrideSystem=true"><span class="scheme">persona://</span><span class="action">identity</span>?<span class="k">overrideSystem</span>=<span class="v">true</span></div>
           <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
         </div>
       </div>

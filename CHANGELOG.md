@@ -2,6 +2,12 @@
 
 Published Sileo builds (`com.0x17.persona.rootless` / `.roothide`). Newest first.
 
+## [2.7.0] - 2026-11-07
+
+### Added
+- `persona://identity?overrideSystem=true|false` turns Override System (fake serial / UDID / MAC) on or off, as the Identity screen's switch does but without its confirmation; turning it on with no system identity saved makes one
+- `persona://device-selection?hardware=…&firmware=…` (each repeatable) replaces the devices and iOS versions that reset picks from: hardware by model name (`iPhone 14 Pro`, every variant of it) or identifier (`iPhone15,2`), firmware by version (`17.4.1`), looked up in the server's device catalog (needs a login and a network). A key left out keeps its picks, a name the catalog does not know changes nothing, and an iOS version that no picked device runs is left out (as Quick Select does)
+
 ## [2.6.1] - 2026-11-05
 
 ### Fixed
