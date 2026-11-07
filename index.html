@@ -100,6 +100,8 @@ body{
   border:1px solid rgba(217,180,105,.25);border-radius:999px;padding:2px 8px;
 }
 .chev{width:16px;height:16px;color:var(--t3);flex:none;}
+/* Narrow phones: each name already says its scheme; without the pill every name fits on one line */
+@media (max-width:400px){ .scheme-pill{display:none;} }
 .doc-glyph{
   width:36px;height:36px;border-radius:9px;flex:none;color:var(--accent);
   background:rgba(217,180,105,.12);border:1px solid rgba(217,180,105,.25);
