@@ -5,6 +5,7 @@ Published Sileo builds (`com.0x17.persona.rootless` / `.roothide`). Newest first
 ## [2.8.0] - 2026-11-13
 
 ### Added
+- `persona://system-enable` / `persona://system-disable`: standalone on/off for Override System (fake serial / UDID / MAC), the same as `persona://identity?overrideSystem=true|false` without touching any other setting
 - Sysctl spoofing now covers the numeric-MIB `sysctl()` path too, not just `sysctlbyname()`: fingerprint code that queries `sysctl({CTL_KERN, …})` / `{CTL_HW, HW_PRODUCT}` directly used to read the real kernel values. Added the full `CTL_KERN` set (`KERN_OSTYPE`/`OSRELEASE`/`OSVERSION`/`VERSION`/`HOSTNAME`/`MAXVNODES`/`BOOTTIME`) and `HW_PRODUCT`, plus the string keys `kern.osproductversion`, `kern.version`, `kern.bootsessionuuid`, `kern.maxvnodes`
 - Generate Device Name switch (Identity → Device): off reports a generic "iPhone" for the device name, `uname` nodename and `kern.hostname` instead of the fake name. Also settable via `persona://identity?generateDeviceName=true|false`. `kern.osproductversion` now follows the Override OS Version switch
 

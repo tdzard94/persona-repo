@@ -295,6 +295,8 @@ footer .fmark span{color:var(--accent)}
       <a href="#a-itunes-status">persona://itunes-status</a>
       <a href="#a-logout-itunes">persona://logout-itunes</a>
       <a href="#a-identity">persona://identity</a>
+      <a href="#a-system-enable">persona://system-enable</a>
+      <a href="#a-system-disable">persona://system-disable</a>
       <a href="#a-config">persona://config</a>
       <a href="#a-general">persona://general</a>
       <a href="#a-proxy">persona://proxy</a>
@@ -566,7 +568,7 @@ footer .fmark span{color:var(--accent)}
   </section>
 
   <!-- ============ IDENTITY ============ -->
-  <section class="cat reveal" data-search="identity override device udid location locale timezone browser webrtc targeting bundleId">
+  <section class="cat reveal" data-search="identity system-enable system-disable override device udid location locale timezone browser webrtc targeting bundleId">
     <div class="cat-head">
       <div class="tile" style="background:var(--tile-violet)"><svg viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6l7-3z"/><path d="M9.5 12l2 2 3.5-4"/></svg></div>
       <div><h2>Identity</h2><div class="cat-sub" data-en="Overrides + app targeting — saving re-applies injection list &amp; timezone" data-vi="Overrides + app targeting — lưu xong tự re-apply injection list &amp; múi giờ">Overrides + app targeting — saving re-applies injection list &amp; timezone</div></div>
@@ -618,6 +620,30 @@ footer .fmark span{color:var(--accent)}
         </div>
         <div class="example-row">
           <div class="example" data-copy="persona://identity?overrideSystem=true"><span class="scheme">persona://</span><span class="action">identity</span>?<span class="k">overrideSystem</span>=<span class="v">true</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-card" id="a-system-enable" data-search="system-enable bật override system serial udid mac">
+      <div class="action-top"><span class="action-url">persona://system-enable</span><span class="badge" data-en="no params" data-vi="không có tham số">no params</span></div>
+      <div class="action-desc" data-en="Turn on Override System (fake serial / UDID / MAC) — same as identity?overrideSystem=true, nothing else changes. With no system identity saved it makes one. Persona 2.8.0+" data-vi="Bật Override System (gia mạo serial / UDID / MAC) — giống identity?overrideSystem=true, không đổi gì khác. Chưa có system identity thì tự tạo. Persona 2.8.0+">Turn on Override System (fake serial / UDID / MAC) — same as identity?overrideSystem=true, nothing else changes. With no system identity saved it makes one. Persona 2.8.0+</div>
+      <div class="ex-label" data-en="Examples" data-vi="Ví dụ">Examples</div>
+      <div class="ex-group">
+        <div class="example-row">
+          <div class="example" data-copy="persona://system-enable"><span class="scheme">persona://</span><span class="action">system-enable</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-card" id="a-system-disable" data-search="system-disable tắt override system serial udid mac">
+      <div class="action-top"><span class="action-url">persona://system-disable</span><span class="badge" data-en="no params" data-vi="không có tham số">no params</span></div>
+      <div class="action-desc" data-en="Turn off Override System — same as identity?overrideSystem=false. The saved system identity is kept, just unused. Persona 2.8.0+" data-vi="Tắt Override System — giống identity?overrideSystem=false. System identity đã lưu vẫn giữ, chỉ không dùng. Persona 2.8.0+">Turn off Override System — same as identity?overrideSystem=false. The saved system identity is kept, just unused. Persona 2.8.0+</div>
+      <div class="ex-label" data-en="Examples" data-vi="Ví dụ">Examples</div>
+      <div class="ex-group">
+        <div class="example-row">
+          <div class="example" data-copy="persona://system-disable"><span class="scheme">persona://</span><span class="action">system-disable</span></div>
           <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
         </div>
       </div>
