@@ -2,6 +2,11 @@
 
 Published Sileo builds (`com.0x17.persona.rootless` / `.roothide`). Newest first.
 
+## [2.8.1] - 2026-11-13
+
+### Fixed
+- Crash on opening App Targeting on iOS 18.4.1 (Dopamine): app icons were rendered through IconServices/CoreImage, which took its OpenGL ES path in Persona's process and called a NULL function. Icons are now read straight from each app's bundle; the private icon API is only used on iOS 26+
+
 ## [2.8.0] - 2026-11-13
 
 ### Added
