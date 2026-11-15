@@ -2,6 +2,12 @@
 
 Published Sileo builds (`com.0x17.persona.rootless` / `.roothide`). Newest first.
 
+## [2.8.4] - 2026-11-15
+
+### Fixed
+- iOS version was not spoofed in apps that read it through `ProcessInfo` (e.g. AIDA64 showed the real iOS 18.7 / 26.0). On iOS 18 and later `ProcessInfo` is a Swift subclass (`_NSSwiftProcessInfo`) with its own implementation that the existing hook never reached; that class is now hooked directly
+- Storage (total / free space) was not spoofed in apps that read it through URL resource values (`volumeTotalCapacity`, `volumeAvailableCapacityForImportantUsage`, e.g. AIDA64); those values are now spoofed too
+
 ## [2.8.3] - 2026-11-15
 
 ### Fixed
