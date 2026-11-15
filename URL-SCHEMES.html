@@ -288,6 +288,7 @@ footer .fmark span{color:var(--accent)}
       <a href="#a-rotate-proxy">persona://rotate-proxy</a>
       <a href="#a-reset-data">persona://reset-data</a>
       <a href="#a-backup-reset">persona://backup-reset</a>
+      <a href="#a-clear-safari">persona://clear-safari</a>
       <a href="#a-device-selection">persona://device-selection</a>
       <a href="#a-backup">persona://backup</a>
       <a href="#a-restore">persona://restore</a>
@@ -370,7 +371,7 @@ footer .fmark span{color:var(--accent)}
   </section>
 
   <!-- ============ DATA MANAGEMENT ============ -->
-  <section class="cat reveal" data-search="reset-data backup-reset device-selection reset xoá dữ liệu app bundleId hardware firmware region chọn máy">
+  <section class="cat reveal" data-search="reset-data backup-reset clear-safari device-selection reset xoá dữ liệu app bundleId hardware firmware region chọn máy">
     <div class="cat-head">
       <div class="tile" style="background:var(--tile-red)"><svg viewBox="0 0 24 24" fill="none" stroke="#F87171" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M10 11v6M14 11v6"/></svg></div>
       <div><h2>Data Management</h2><div class="cat-sub" data-en="Reset / backup + reset app data" data-vi="Reset / backup + reset dữ liệu app">Reset / backup + reset app data</div></div>
@@ -431,6 +432,18 @@ footer .fmark span{color:var(--accent)}
         </div>
         <div class="example-row">
           <div class="example" data-copy="persona://backup-reset?name=Weekly&bundleId=com.zalo.text&hardware=iPhone14%20Pro"><span class="scheme">persona://</span><span class="action">backup-reset</span>?<span class="k">name</span>=<span class="v">Weekly</span>&amp;<span class="k">bundleId</span>=<span class="v">com.zalo.text</span>&amp;<span class="k">hardware</span>=<span class="v">iPhone14%20Pro</span></div>
+          <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-card" id="a-clear-safari" data-search="clear-safari xoá safari cookie lịch sử website data">
+      <div class="action-top"><span class="action-url">persona://clear-safari</span><span class="badge" data-en="no params" data-vi="không có tham số">no params</span></div>
+      <div class="action-desc" data-en="Close all apps, then wipe Safari data: Safari container, SafariViewService (in-app browser / Sign in with Google cookies) and ~/Library/Safari. No confirmation; shows progress and a result alert." data-vi="Đóng toàn bộ app rồi xoá dữ liệu Safari: container Safari, SafariViewService (cookie của trình duyệt trong app / Sign in with Google) và ~/Library/Safari. Không hỏi xác nhận; hiện tiến trình và kết quả.">Close all apps, then wipe Safari data: Safari container, SafariViewService (in-app browser / Sign in with Google cookies) and ~/Library/Safari. No confirmation; shows progress and a result alert.</div>
+      <div class="ex-label" data-en="Examples" data-vi="Ví dụ">Examples</div>
+      <div class="ex-group">
+        <div class="example-row">
+          <div class="example" data-copy="persona://clear-safari"><span class="scheme">persona://</span><span class="action">clear-safari</span></div>
           <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-en="Copy" data-vi="Sao chép">Copy</span></button>
         </div>
       </div>

@@ -2,6 +2,24 @@
 
 Published Sileo builds (`com.0x17.persona.rootless` / `.roothide`). Newest first.
 
+## [2.8.2] - 2026-11-15
+
+### Added
+- `persona://clear-safari`: closes all apps and wipes Safari data (Safari container, SafariViewService, `~/Library/Safari`) without a confirmation prompt
+- Change Device now restarts the system daemons that cache the old identity (`timed`, `nsurlsessiond`, `securityd`, `lsd`, `cfprefsd`, `identityservicesd`, `locationd`, `wifid`, `mDNSResponder`, … — 20 in total). Expect a few seconds of network drop right after
+- Restoring a backup now applies the restored device identity like a device change: reloads it, applies its timezone and restarts the same daemons
+- Clear System Cache also removes the LaunchServices vendor identifiers (`com.apple.lsdidentifiers.plist`, backs IDFV) and stored push notifications, then restarts `lsd`
+
+### Fixed
+- The app logged itself out (back to the login screen) when the network dropped, e.g. while switching proxy: a lost token-refresh response or a failed session check was treated as an invalid session. It now re-activates silently with the saved license key and keeps the session through network errors. Server calls are retried up to 5 times on a network drop or a 502/503/504, waiting longer each time (1s, 2s, 4s, 8s, 16s); a failed silent re-activation retries in the background (10s → 30s → 1m → 2m → every 5m) and opens the app by itself if the lock screen was showing; only an explicit server rejection (key invalid, subscription suspended/expired/cancelled, device mismatch) logs out
+- `persona://rotate-proxy?host=…` never showed its result alert
+- Keychain clear missed apps whose keychain group does not contain their bundle id (e.g. ProtonVPN stores under `prt.ProtonVPN`) and could hit sibling apps (`com.vendor.app` also matched `com.vendor.app2`). It now uses each app's and its extensions' real access groups from their entitlements
+- Reset reported success when steps actually failed: app wipe failures, system cache leftovers and an unusable proxy are now shown as failed steps
+- Clear System Cache left items the app is not allowed to delete (e.g. the QuickLook thumbnail cache); those are now removed too
+- Rotate Proxy during reset now waits until the new proxy is applied before Change Device looks up the region, so the new identity matches the new exit IP
+- A second `persona://reset-data` / `backup-reset` while a reset is running left a spinner on screen forever; it now reports "already in progress"
+- Reset with no apps ticked asked to confirm a "Safari only" reset that then failed; it now says no apps are selected up front
+
 ## [2.8.1] - 2026-11-13
 
 ### Fixed
