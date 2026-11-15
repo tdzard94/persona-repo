@@ -34,16 +34,16 @@ Author: 0x17.dev
 Name: PersonaProxy
 
 Package: com.0x17.persona.roothide
-Version: 2.8.3-1
+Version: 2.8.4-1
 Architecture: iphoneos-arm64e
 Maintainer: 0x17.dev
 Installed-Size: 10468
 Depends: preferenceloader, firmware (>= 14.0), com.0x17.persona.proxy, com.0x17.persona.helper, zip, unzip, sqlite3
-Filename: ./com.0x17.persona.roothide_2.8.3-1_iphoneos-arm64e.deb
-Size: 2763546
-MD5sum: 156b2aabbb65457bee56415e5a94a163
-SHA1: 96a3038de9694fe137ad3b12cdcac428020f96b6
-SHA256: 9454832fdc1eb451a21b0f618d0dbaf26a76354b58746d6975a00861500b874b
+Filename: ./com.0x17.persona.roothide_2.8.4-1_iphoneos-arm64e.deb
+Size: 2768980
+MD5sum: 7cc052aaca346e1b834b46a24526b2f2
+SHA1: fa8043849f0d40c6f8fc0fd7e763087a39ad48c1
+SHA256: c3723bac906768dac4bffd682542edce325093e7f053a79be6b7b5936decd2a7
 Section: Tweaks
 Description: Persona device identity spoofing tweak + companion app (identity, proxy, RRS, App Store account)
 Tag: role::hacker
