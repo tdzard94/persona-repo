@@ -2,6 +2,13 @@
 
 Published Sileo builds (`com.0x17.persona.rootless` / `.roothide`). Newest first.
 
+## [2.8.3] - 2026-11-15
+
+### Fixed
+- Reset failed at "Clearing system cache" on iOS 18: `/var/mobile/Library/Caches/com.apple.geod` cannot be deleted itself (the folder is protected even for root) although its contents can. A cache folder that ends up empty now counts as cleared
+- Firmware (iOS version) was not spoofed in apps that read `kern.osproductversion` through `sysctl()` with a numeric MIB (e.g. AIDA64) instead of `sysctlbyname()` — the real version was shown
+- sysctl string values (version, build, kernel, machine, model, hostname): a size query now returns the length of the spoofed value, so a spoofed value longer than the real one is no longer cut off
+
 ## [2.8.2] - 2026-11-15
 
 ### Added
