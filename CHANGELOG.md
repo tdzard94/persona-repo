@@ -2,6 +2,14 @@
 
 Published Sileo builds (`com.0x17.persona.rootless` / `.roothide`). Newest first.
 
+## [2.8.5] - 2026-11-25
+
+### Added
+- TikTok Pro (`com.ss.iphone.ugc.tiktok.pro`) is now covered by the TikTok-specific identity hooks
+
+### Changed
+- The Sileo repo now keeps older versions — you can pick and downgrade to a previous build in Sileo
+
 ## [2.8.4] - 2026-11-15
 
 ### Fixed
